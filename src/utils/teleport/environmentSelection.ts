@@ -75,3 +75,4 @@ export async function getEnvironmentSelectionInfo(): Promise<EnvironmentSelectio
     selectedEnvironmentSource,
   }
 }
+
