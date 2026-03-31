@@ -25,3 +25,4 @@ const fast = {
 
 export default fast
 
+
