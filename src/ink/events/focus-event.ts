@@ -19,3 +19,4 @@ export class FocusEvent extends TerminalEvent {
     this.relatedTarget = relatedTarget
   }
 }
+
