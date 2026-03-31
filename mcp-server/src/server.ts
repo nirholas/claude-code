@@ -142,6 +142,228 @@ async function getCommandList(): Promise<CommandInfo[]> {
 }
 
 // ---------------------------------------------------------------------------
+// Import Analysis Types
+// ---------------------------------------------------------------------------
+
+interface ImportInfo {
+  type: "named" | "default" | "namespace" | "side-effect" | "require";
+  specifiers: string[];
+  source: string;
+  isRelative: boolean;
+  line: number;
+}
+
+interface ImportAnalysis {
+  file: string;
+  totalImports: number;
+  relativeImports: number;
+  externalImports: number;
+  imports: ImportInfo[];
+}
+
+/** Parse TypeScript/ES import statements and CommonJS require calls from source text. */
+function parseImports(source: string, filePath: string): ImportAnalysis {
+  const lines = source.split("\n");
+  const imports: ImportInfo[] = [];
+
+  const defaultAndNamedRe =
+    /^import\s+([A-Za-z_$][\w$]*)\s*,\s*\{([^}]+)\}\s+from\s+["']([^"']+)["']/;
+  const namespaceImportRe =
+    /^import\s+\*\s+as\s+([A-Za-z_$][\w$]*)\s+from\s+["']([^"']+)["']/;
+  const namedImportRe =
+    /^import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["']/;
+  const defaultImportRe =
+    /^import\s+([A-Za-z_$][\w$]*)\s+from\s+["']([^"']+)["']/;
+  const sideEffectImportRe =
+    /^import\s+["']([^"']+)["']/;
+  const constRequireRe =
+    /(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*require\s*\(\s*["']([^"']+)["']\s*\)/;
+  const destructRequireRe =
+    /(?:const|let|var)\s+\{([^}]+)\}\s*=\s*require\s*\(\s*["']([^"']+)["']\s*\)/;
+  const dynamicRequireRe =
+    /require\s*\(\s*["']([^"']+)["']\s*\)/;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]!.trim();
+    let match: RegExpMatchArray | null;
+
+    // default + named: import Foo, { bar, baz } from 'mod'
+    match = line.match(defaultAndNamedRe);
+    if (match) {
+      const specifiers = [
+        match[1]!,
+        ...match[2]!.split(",").map((s) => s.trim()).filter(Boolean),
+      ];
+      const src = match[3]!;
+      imports.push({
+        type: "named",
+        specifiers,
+        source: src,
+        isRelative: src.startsWith("."),
+        line: i + 1,
+      });
+      continue;
+    }
+
+    // namespace: import * as X from 'mod'
+    match = line.match(namespaceImportRe);
+    if (match) {
+      imports.push({
+        type: "namespace",
+        specifiers: [match[1]!],
+        source: match[2]!,
+        isRelative: match[2]!.startsWith("."),
+        line: i + 1,
+      });
+      continue;
+    }
+
+    // named: import { X, Y } from 'mod'
+    match = line.match(namedImportRe);
+    if (match) {
+      const specifiers = match[1]!
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      imports.push({
+        type: "named",
+        specifiers,
+        source: match[2]!,
+        isRelative: match[2]!.startsWith("."),
+        line: i + 1,
+      });
+      continue;
+    }
+
+    // default: import X from 'mod'
+    match = line.match(defaultImportRe);
+    if (match) {
+      imports.push({
+        type: "default",
+        specifiers: [match[1]!],
+        source: match[2]!,
+        isRelative: match[2]!.startsWith("."),
+        line: i + 1,
+      });
+      continue;
+    }
+
+    // side-effect: import 'mod'
+    match = line.match(sideEffectImportRe);
+    if (match) {
+      imports.push({
+        type: "side-effect",
+        specifiers: [],
+        source: match[1]!,
+        isRelative: match[1]!.startsWith("."),
+        line: i + 1,
+      });
+      continue;
+    }
+
+    // destructured require: const { X } = require('mod')
+    match = line.match(destructRequireRe);
+    if (match) {
+      const specifiers = match[1]!
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      imports.push({
+        type: "require",
+        specifiers,
+        source: match[2]!,
+        isRelative: match[2]!.startsWith("."),
+        line: i + 1,
+      });
+      continue;
+    }
+
+    // const X = require('mod')
+    match = line.match(constRequireRe);
+    if (match) {
+      imports.push({
+        type: "require",
+        specifiers: [match[1]!],
+        source: match[2]!,
+        isRelative: match[2]!.startsWith("."),
+        line: i + 1,
+      });
+      continue;
+    }
+
+    // dynamic require('mod') — standalone, not already captured above
+    if (!line.startsWith("import") && dynamicRequireRe.test(line)) {
+      match = line.match(dynamicRequireRe);
+      if (match) {
+        imports.push({
+          type: "require",
+          specifiers: [],
+          source: match[1]!,
+          isRelative: match[1]!.startsWith("."),
+          line: i + 1,
+        });
+      }
+    }
+  }
+
+  return {
+    file: filePath,
+    totalImports: imports.length,
+    relativeImports: imports.filter((im) => im.isRelative).length,
+    externalImports: imports.filter((im) => !im.isRelative).length,
+    imports,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Feature Flag Types
+// ---------------------------------------------------------------------------
+
+interface FeatureFlagLocation {
+  file: string;
+  line: number;
+  context: string;
+}
+
+interface FeatureFlagEntry {
+  flag: string;
+  type: string;
+  locations: FeatureFlagLocation[];
+}
+
+interface FeatureFlagResult {
+  totalFlags: number;
+  totalUsages: number;
+  flags: FeatureFlagEntry[];
+}
+
+/** Env-var prefixes/suffixes that indicate feature gating. */
+const FEATURE_ENV_PREFIXES = [
+  "FEATURE_", "ENABLE_", "DISABLE_", "FF_", "FLAG_",
+];
+const FEATURE_ENV_SUFFIXES = ["_ENABLED", "_DISABLED", "_FEATURE"];
+
+function isFeatureEnvVar(name: string): boolean {
+  return (
+    FEATURE_ENV_PREFIXES.some((p) => name.startsWith(p)) ||
+    FEATURE_ENV_SUFFIXES.some((s) => name.includes(s))
+  );
+}
+
+/** Build context snippet: 1 line before through 1 line after the match. */
+function buildContext(lines: string[], idx: number): string {
+  const start = Math.max(0, idx - 1);
+  const end = Math.min(lines.length, idx + 2);
+  return lines
+    .slice(start, end)
+    .map(
+      (l: string, offset: number) =>
+        `${(start + offset + 1).toString().padStart(5)} | ${l}`
+    )
+    .join("\n");
+}
+
+// ---------------------------------------------------------------------------
 // Server Factory
 // ---------------------------------------------------------------------------
 
@@ -371,6 +593,28 @@ export function createServer(): Server {
         name: "get_architecture",
         description:
           "Get a high-level architecture overview of Claude Code.",
+        inputSchema: { type: "object" as const, properties: {} },
+      },
+      {
+        name: "analyze_imports",
+        description:
+          "Analyze TypeScript import statements in a given source file. Returns a structured list of imports: what is imported, from where, whether it is relative or external, and the import type (named, default, namespace, side-effect, or require).",
+        inputSchema: {
+          type: "object" as const,
+          properties: {
+            path: {
+              type: "string",
+              description:
+                "Relative path from src/, e.g. 'QueryEngine.ts' or 'tools/BashTool/BashTool.ts'",
+            },
+          },
+          required: ["path"],
+        },
+      },
+      {
+        name: "get_feature_flags",
+        description:
+          "Scan the entire source tree for feature flag usage. Finds feature('...') calls and process.env references that indicate feature gating. Returns all flags with their file paths, line numbers, and surrounding context.",
         inputSchema: { type: "object" as const, properties: {} },
       },
     ],
@@ -639,6 +883,119 @@ ${commands.map((c) => `- **${c.name}** ${c.isDirectory ? "(directory)" : "(file)
 - **server/** — Server/remote mode
 `;
           return { content: [{ type: "text" as const, text: overview }] };
+        }
+
+        case "analyze_imports": {
+          const relPath = (args as Record<string, unknown>)?.path as string;
+          if (!relPath) throw new Error("path is required");
+          const abs = safePath(relPath);
+          if (!abs || !(await fileExists(abs)))
+            throw new Error(`File not found: ${relPath}`);
+          const fileContent = await fs.readFile(abs, "utf-8");
+          const analysis = parseImports(fileContent, relPath);
+          return {
+            content: [
+              {
+                type: "text" as const,
+                text: JSON.stringify(analysis, null, 2),
+              },
+            ],
+          };
+        }
+
+        case "get_feature_flags": {
+          const allFiles = await walkFiles(SRC_ROOT);
+          const tsFiles = allFiles.filter(
+            (f) => f.endsWith(".ts") || f.endsWith(".tsx")
+          );
+
+          const featureCallRe = /feature\s*\(\s*["']([^"']+)["']\s*\)/g;
+          const processEnvRe = /process\.env\.([A-Z][A-Z0-9_]*)/g;
+
+          interface RawFlag {
+            flag: string;
+            file: string;
+            line: number;
+            context: string;
+            type: "feature_call" | "process_env";
+          }
+
+          const rawFlags: RawFlag[] = [];
+
+          for (const file of tsFiles) {
+            const absPath = path.join(SRC_ROOT, file);
+            let fileContent: string;
+            try {
+              fileContent = await fs.readFile(absPath, "utf-8");
+            } catch {
+              continue;
+            }
+            const fileLines = fileContent.split("\n");
+            for (let i = 0; i < fileLines.length; i++) {
+              const line = fileLines[i]!;
+              let match: RegExpExecArray | null;
+
+              // feature('FLAG_NAME') calls
+              featureCallRe.lastIndex = 0;
+              while ((match = featureCallRe.exec(line)) !== null) {
+                rawFlags.push({
+                  flag: match[1]!,
+                  file,
+                  line: i + 1,
+                  context: buildContext(fileLines, i),
+                  type: "feature_call",
+                });
+              }
+
+              // process.env.FLAG_NAME references (filtered to feature-like names)
+              processEnvRe.lastIndex = 0;
+              while ((match = processEnvRe.exec(line)) !== null) {
+                const envName = match[1]!;
+                if (isFeatureEnvVar(envName)) {
+                  rawFlags.push({
+                    flag: envName,
+                    file,
+                    line: i + 1,
+                    context: buildContext(fileLines, i),
+                    type: "process_env",
+                  });
+                }
+              }
+            }
+          }
+
+          // Group by unique flag identity (type + name)
+          const flagMap = new Map<string, FeatureFlagEntry>();
+          for (const f of rawFlags) {
+            const key = `${f.type}:${f.flag}`;
+            if (!flagMap.has(key)) {
+              flagMap.set(key, {
+                flag: f.flag,
+                type: f.type,
+                locations: [],
+              });
+            }
+            flagMap.get(key)!.locations.push({
+              file: f.file,
+              line: f.line,
+              context: f.context,
+            });
+          }
+
+          const result: FeatureFlagResult = {
+            totalFlags: flagMap.size,
+            totalUsages: rawFlags.length,
+            flags: Array.from(flagMap.values()),
+          };
+
+          return {
+            content: [
+              {
+                type: "text" as const,
+                text: JSON.stringify(result, null, 2),
+              },
+            ],
+          };
         }
 
         default:
