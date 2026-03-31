@@ -1493,3 +1493,4 @@ export function formatActionForClassifier(
     content: [{ type: 'tool_use', name: toolName, input: toolInput }],
   }
 }
+
