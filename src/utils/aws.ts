@@ -72,3 +72,4 @@ export async function clearAwsIniCache(): Promise<void> {
     )
   }
 }
+
