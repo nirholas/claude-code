@@ -12,6 +12,8 @@ import {
   ListResourcesRequestSchema,
   ReadResourceRequestSchema,
   ListResourceTemplatesRequestSchema,
+  ListPromptsRequestSchema,
+  GetPromptRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
@@ -150,6 +152,7 @@ export function createServer(): Server {
       capabilities: {
         tools: {},
         resources: {},
+        prompts: {},
       },
     }
   );
@@ -644,6 +647,298 @@ ${commands.map((c) => `- **${c.name}** ${c.isDirectory ? "(directory)" : "(file)
     }
   );
 
+  // ---- Prompts -----------------------------------------------------------
+
+  server.setRequestHandler(ListPromptsRequestSchema, async () => ({
+    prompts: [
+      {
+        name: "explain_tool",
+        description:
+          "Explain how a specific Claude Code tool works, including its input schema, permissions, and execution flow.",
+        arguments: [
+          {
+            name: "toolName",
+            description: "Tool directory name, e.g. 'BashTool', 'FileEditTool'",
+            required: true,
+          },
+        ],
+      },
+      {
+        name: "explain_command",
+        description: "Explain how a specific Claude Code slash command works.",
+        arguments: [
+          {
+            name: "commandName",
+            description: "Command name, e.g. 'commit', 'review', 'mcp'",
+            required: true,
+          },
+        ],
+      },
+      {
+        name: "architecture_overview",
+        description:
+          "Get a guided tour of the Claude Code architecture with explanations of each subsystem.",
+      },
+      {
+        name: "how_does_it_work",
+        description:
+          "Explain how a specific feature or subsystem of Claude Code works.",
+        arguments: [
+          {
+            name: "feature",
+            description:
+              "Feature or subsystem, e.g. 'permission system', 'MCP client', 'query engine', 'bridge'",
+            required: true,
+          },
+        ],
+      },
+      {
+        name: "compare_tools",
+        description:
+          "Compare two Claude Code tools side by side — purpose, inputs, permissions, implementation.",
+        arguments: [
+          { name: "tool1", description: "First tool name", required: true },
+          { name: "tool2", description: "Second tool name", required: true },
+        ],
+      },
+    ],
+  }));
+
+  server.setRequestHandler(
+    GetPromptRequestSchema,
+    async (request: {
+      params: { name: string; arguments?: Record<string, string> };
+    }) => {
+      const { name, arguments: args } = request.params;
+
+      switch (name) {
+        case "explain_tool": {
+          const toolName = args?.toolName;
+          if (!toolName) throw new Error("toolName argument is required");
+          const toolDir = safePath(`tools/${toolName}`);
+          if (!toolDir || !(await dirExists(toolDir)))
+            throw new Error(`Tool not found: ${toolName}`);
+          const files = await listDir(toolDir);
+          const mainFile =
+            files.find(
+              (f) => f === `${toolName}.ts` || f === `${toolName}.tsx`
+            ) ?? files.find((f) => f.endsWith(".ts") || f.endsWith(".tsx"));
+          let source = "";
+          if (mainFile) {
+            source = await fs.readFile(path.join(toolDir, mainFile), "utf-8");
+          }
+          return {
+            description: `Explanation of the ${toolName} tool`,
+            messages: [
+              {
+                role: "user" as const,
+                content: {
+                  type: "text" as const,
+                  text: `Analyze and explain this Claude Code tool implementation. Cover:\n1. Purpose\n2. Input Schema\n3. Permissions\n4. Execution Flow\n5. Output\n6. Safety characteristics\n\nFiles in tools/${toolName}/: ${files.join(", ")}\n\nMain source (${mainFile ?? "not found"}):\n\`\`\`typescript\n${source}\n\`\`\``,
+                },
+              },
+            ],
+          };
+        }
+
+        case "explain_command": {
+          const commandName = args?.commandName;
+          if (!commandName)
+            throw new Error("commandName argument is required");
+          const candidates = [
+            `commands/${commandName}`,
+            `commands/${commandName}.ts`,
+            `commands/${commandName}.tsx`,
+          ];
+          let found: string | null = null;
+          let isDir = false;
+          for (const c of candidates) {
+            const abs = safePath(c);
+            if (abs && (await dirExists(abs))) {
+              found = abs;
+              isDir = true;
+              break;
+            }
+            if (abs && (await fileExists(abs))) {
+              found = abs;
+              break;
+            }
+          }
+          if (!found) throw new Error(`Command not found: ${commandName}`);
+          let source = "";
+          let fileList = "";
+          if (isDir) {
+            const files = await listDir(found);
+            fileList = files.join(", ");
+            const indexFile = files.find(
+              (f) => f === "index.ts" || f === "index.tsx"
+            );
+            if (indexFile) {
+              source = await fs.readFile(
+                path.join(found, indexFile),
+                "utf-8"
+              );
+            }
+          } else {
+            source = await fs.readFile(found, "utf-8");
+            fileList = path.basename(found);
+          }
+          return {
+            description: `Explanation of the /${commandName} command`,
+            messages: [
+              {
+                role: "user" as const,
+                content: {
+                  type: "text" as const,
+                  text: `Analyze and explain this Claude Code slash command. Cover:\n1. Purpose\n2. Type (prompt vs action)\n3. Allowed Tools\n4. Arguments\n5. Implementation\n\nFiles: ${fileList}\n\nSource:\n\`\`\`typescript\n${source}\n\`\`\``,
+                },
+              },
+            ],
+          };
+        }
+
+        case "architecture_overview": {
+          const readmePath = path.resolve(SRC_ROOT, "..", "README.md");
+          let readme = "";
+          try {
+            readme = await fs.readFile(readmePath, "utf-8");
+          } catch {
+            /* */
+          }
+          const topLevel = await listDir(SRC_ROOT);
+          const tools = await getToolList();
+          const commands = await getCommandList();
+          return {
+            description: "Architecture overview of Claude Code",
+            messages: [
+              {
+                role: "user" as const,
+                content: {
+                  type: "text" as const,
+                  text: `Give a comprehensive guided tour of the Claude Code architecture.\n\n## README\n${readme}\n\n## src/ entries\n${topLevel.join("\n")}\n\n## Tools (${tools.length})\n${tools.map((t) => `- ${t.name}: ${t.files.join(", ")}`).join("\n")}\n\n## Commands (${commands.length})\n${commands.map((c) => `- ${c.name} ${c.isDirectory ? "(dir)" : "(file)"}`).join("\n")}`,
+                },
+              },
+            ],
+          };
+        }
+
+        case "how_does_it_work": {
+          const feature = args?.feature;
+          if (!feature) throw new Error("feature argument is required");
+          const featureMap: Record<string, string[]> = {
+            "permission system": [
+              "utils/permissions/",
+              "hooks/toolPermission/",
+              "Tool.ts",
+            ],
+            permissions: [
+              "utils/permissions/",
+              "hooks/toolPermission/",
+              "Tool.ts",
+            ],
+            "mcp client": [
+              "services/mcp/",
+              "tools/MCPTool/",
+              "tools/ListMcpResourcesTool/",
+            ],
+            mcp: ["services/mcp/", "entrypoints/mcp.ts", "tools/MCPTool/"],
+            "tool system": ["Tool.ts", "tools.ts", "tools/"],
+            tools: ["Tool.ts", "tools.ts"],
+            "query engine": ["QueryEngine.ts", "query/"],
+            bridge: ["bridge/"],
+            "ide integration": ["bridge/"],
+            context: ["context.ts", "context/"],
+            commands: ["commands.ts", "types/command.ts"],
+            "command system": ["commands.ts", "types/command.ts", "commands/"],
+            plugins: ["plugins/"],
+            skills: ["skills/"],
+            tasks: ["tasks.ts", "tasks/", "tools/TaskCreateTool/"],
+            coordinator: ["coordinator/", "tools/AgentTool/"],
+            "multi-agent": ["coordinator/", "tools/AgentTool/"],
+            memory: ["memdir/", "commands/memory/"],
+            voice: ["voice/"],
+            server: ["server/"],
+          };
+          const paths = featureMap[feature.toLowerCase()] ?? [];
+          let contextFiles = "";
+          for (const p of paths) {
+            const abs = safePath(p);
+            if (!abs) continue;
+            try {
+              const stat = await fs.stat(abs);
+              if (stat.isDirectory()) {
+                const files = await listDir(abs);
+                contextFiles += `\n### ${p}\nFiles: ${files.join(", ")}\n`;
+              } else {
+                const content = await fs.readFile(abs, "utf-8");
+                const preview = content.split("\n").slice(0, 200).join("\n");
+                contextFiles += `\n### ${p} (first 200 lines)\n\`\`\`typescript\n${preview}\n\`\`\`\n`;
+              }
+            } catch {
+              /* skip */
+            }
+          }
+          return {
+            description: `How ${feature} works in Claude Code`,
+            messages: [
+              {
+                role: "user" as const,
+                content: {
+                  type: "text" as const,
+                  text: `Explain how "${feature}" works in the Claude Code CLI.\n${contextFiles || "(No specific files mapped — use search_source and read_source_file to find relevant code.)"}`,
+                },
+              },
+            ],
+          };
+        }
+
+        case "compare_tools": {
+          const tool1 = args?.tool1;
+          const tool2 = args?.tool2;
+          if (!tool1 || !tool2)
+            throw new Error("Both tool1 and tool2 arguments are required");
+          const sources: string[] = [];
+          for (const toolName of [tool1, tool2]) {
+            const toolDir = safePath(`tools/${toolName}`);
+            if (!toolDir || !(await dirExists(toolDir))) {
+              sources.push(`// Tool not found: ${toolName}`);
+              continue;
+            }
+            const files = await listDir(toolDir);
+            const mainFile =
+              files.find(
+                (f) => f === `${toolName}.ts` || f === `${toolName}.tsx`
+              ) ?? files.find((f) => f.endsWith(".ts") || f.endsWith(".tsx"));
+            if (mainFile) {
+              const content = await fs.readFile(
+                path.join(toolDir, mainFile),
+                "utf-8"
+              );
+              sources.push(`// tools/${toolName}/${mainFile}\n${content}`);
+            } else {
+              sources.push(`// No main source found for ${toolName}`);
+            }
+          }
+          return {
+            description: `Comparison of ${tool1} vs ${tool2}`,
+            messages: [
+              {
+                role: "user" as const,
+                content: {
+                  type: "text" as const,
+                  text: `Compare these two Claude Code tools:\n\n## ${tool1}\n\`\`\`typescript\n${sources[0]}\n\`\`\`\n\n## ${tool2}\n\`\`\`typescript\n${sources[1]}\n\`\`\``,
+                },
+              },
+            ],
+          };
+        }
+
+        default:
+          throw new Error(`Unknown prompt: ${name}`);
+      }
+    }
+  );
+
   return server;
 }
 
@@ -659,3 +954,4 @@ export async function validateSrcRoot(): Promise<void> {
     process.exit(1);
   }
 }
+
