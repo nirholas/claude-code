@@ -877,3 +877,4 @@ export async function pluginUpdateHandler(
   await updatePluginCli(plugin, scope)
 }
 
+
