@@ -168,3 +168,4 @@ function formatRulesForCritique(
     '\n\n'
   )
 }
+
