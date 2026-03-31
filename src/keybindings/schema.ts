@@ -234,3 +234,4 @@ export const KeybindingsSchema = lazySchema(() =>
 export type KeybindingsSchemaType = z.infer<
   ReturnType<typeof KeybindingsSchema>
 >
+

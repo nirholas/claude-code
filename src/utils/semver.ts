@@ -57,3 +57,4 @@ export function order(a: string, b: string): -1 | 0 | 1 {
   }
   return getNpmSemver().compare(a, b, { loose: true })
 }
+

@@ -439,3 +439,4 @@ export type ToolPermissionContext = {
   readonly awaitAutomatedChecksBeforeDialog?: boolean
   readonly prePlanMode?: PermissionMode
 }
+

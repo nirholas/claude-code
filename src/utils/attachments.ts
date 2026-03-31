@@ -3995,3 +3995,4 @@ function isFileReadDenied(
   )
   return denyRule !== null
 }
+

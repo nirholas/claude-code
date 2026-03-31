@@ -445,3 +445,4 @@ export function clearSessionHooks(
 
   logForDebugging(`Cleared all session hooks for session ${sessionId}`)
 }
+

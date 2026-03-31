@@ -16,3 +16,4 @@ export function getDescription(): string {
   - Multiline matching: By default patterns match within single lines only. For cross-line patterns like \`struct \\{[\\s\\S]*?field\`, use \`multiline: true\`
 `
 }
+

@@ -342,3 +342,4 @@ export async function updatePluginCli(
     handlePluginCommandError(error, 'update', plugin)
   }
 }
+

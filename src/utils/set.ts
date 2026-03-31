@@ -51,3 +51,4 @@ export function union<A>(a: Set<A>, b: Set<A>): Set<A> {
   }
   return result
 }
+

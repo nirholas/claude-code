@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "claude-code-explorer": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["tsx", "${workspaceFolder}/mcp-server/src/index.ts"],
+      "env": {
+        "CLAUDE_CODE_SRC_ROOT": "${workspaceFolder}/src"
+      }
+    }
+  }
+}
+
+

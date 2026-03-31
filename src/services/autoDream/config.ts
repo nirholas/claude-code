@@ -19,3 +19,4 @@ export function isAutoDreamEnabled(): boolean {
   )
   return gb?.enabled === true
 }
+

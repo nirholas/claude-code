@@ -96,3 +96,4 @@ export function useSelectionBgColor(selection: Selection): void {
     selection.setSelectionBgColor(getTheme(themeName).selectionBg)
   }, [selection, themeName])
 }
+

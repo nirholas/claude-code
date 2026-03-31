@@ -126,3 +126,4 @@ const NUL_REDIRECT_REGEX = /(\d?&?>+\s*)[Nn][Uu][Ll](?=\s|$|[|&;)\n])/g
 export function rewriteWindowsNullRedirect(command: string): string {
   return command.replace(NUL_REDIRECT_REGEX, '$1/dev/null')
 }
+

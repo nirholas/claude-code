@@ -52,3 +52,4 @@ export function getLeaderSetToolPermissionContext(): SetToolPermissionContextFn 
 export function unregisterLeaderSetToolPermissionContext(): void {
   registeredPermissionContextSetter = null
 }
+

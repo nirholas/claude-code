@@ -131,3 +131,4 @@ export function useIssueFlagBanner(
   activeForSubmitRef.current = submitCount
   return true
 }
+

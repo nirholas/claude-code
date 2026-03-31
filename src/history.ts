@@ -462,3 +462,4 @@ export function removeLastFromHistory(): void {
     skippedTimestamps.add(entry.timestamp)
   }
 }
+

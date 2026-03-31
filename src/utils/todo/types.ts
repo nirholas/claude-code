@@ -16,3 +16,4 @@ export type TodoItem = z.infer<ReturnType<typeof TodoItemSchema>>
 
 export const TodoListSchema = lazySchema(() => z.array(TodoItemSchema()))
 export type TodoList = z.infer<ReturnType<typeof TodoListSchema>>
+

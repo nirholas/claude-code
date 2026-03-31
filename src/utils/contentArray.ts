@@ -49,3 +49,4 @@ export function insertBlockAfterToolResults(
     content.splice(insertIndex, 0, block)
   }
 }
+

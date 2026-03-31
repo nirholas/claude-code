@@ -593,3 +593,4 @@ export async function installPluginFromMarketplace({
     return { success: false, error: `Failed to install: ${errorMessage}` }
   }
 }
+

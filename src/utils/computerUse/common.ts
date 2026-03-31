@@ -59,3 +59,4 @@ export const CLI_CU_CAPABILITIES = {
 export function isComputerUseMCPServer(name: string): boolean {
   return normalizeNameForMCP(name) === COMPUTER_USE_MCP_SERVER_NAME
 }
+

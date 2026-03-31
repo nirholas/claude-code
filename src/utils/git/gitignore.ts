@@ -97,3 +97,4 @@ export async function addFileGlobRuleToGitignore(
     logError(error)
   }
 }
+

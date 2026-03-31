@@ -314,3 +314,4 @@ function hasManagedSettingsFile(): boolean {
   }
   return false
 }
+

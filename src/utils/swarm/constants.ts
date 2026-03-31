@@ -31,3 +31,4 @@ export const TEAMMATE_COLOR_ENV_VAR = 'CLAUDE_CODE_AGENT_COLOR'
  * When set to 'true', teammates must enter plan mode and get approval before writing code.
  */
 export const PLAN_MODE_REQUIRED_ENV_VAR = 'CLAUDE_CODE_PLAN_MODE_REQUIRED'
+

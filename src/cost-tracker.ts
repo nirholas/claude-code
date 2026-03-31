@@ -234,12 +234,24 @@ export function formatTotalCost(): string {
 
   const modelUsageDisplay = formatModelUsage()
 
+  // Include x402 payment summary if any payments were made
+  let x402Display = ''
+  try {
+    const { formatX402Cost } = require('./services/x402/index.js') as typeof import('./services/x402/index.js')
+    const x402Summary = formatX402Cost()
+    if (x402Summary) {
+      x402Display = '\n' + x402Summary
+    }
+  } catch {
+    // x402 module not available, skip
+  }
+
   return chalk.dim(
     `Total cost:            ${costDisplay}\n` +
       `Total duration (API):  ${formatDuration(getTotalAPIDuration())}
 Total duration (wall): ${formatDuration(getTotalDuration())}
 Total code changes:    ${getTotalLinesAdded()} ${getTotalLinesAdded() === 1 ? 'line' : 'lines'} added, ${getTotalLinesRemoved()} ${getTotalLinesRemoved() === 1 ? 'line' : 'lines'} removed
-${modelUsageDisplay}`,
+${modelUsageDisplay}${x402Display}`,
   )
 }
 
@@ -321,3 +333,4 @@ export function addToTotalSessionCost(
   }
   return totalCost
 }
+

@@ -1086,3 +1086,4 @@ async function performPluginUpdate({
     }
   }
 }
+

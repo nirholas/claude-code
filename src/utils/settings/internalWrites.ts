@@ -35,3 +35,4 @@ export function consumeInternalWrite(path: string, windowMs: number): boolean {
 export function clearInternalWrites(): void {
   timestamps.clear()
 }
+

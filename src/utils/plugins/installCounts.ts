@@ -290,3 +290,4 @@ export function formatInstallCount(count: number): string {
     ? `${formatted.slice(0, -2)}M`
     : `${formatted}M`
 }
+

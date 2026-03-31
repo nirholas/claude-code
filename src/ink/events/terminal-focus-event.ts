@@ -17,3 +17,4 @@ export class TerminalFocusEvent extends Event {
     this.type = type
   }
 }
+

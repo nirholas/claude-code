@@ -40,3 +40,4 @@ export function effortLevelToSymbol(level: EffortLevel): string {
       return EFFORT_HIGH
   }
 }
+

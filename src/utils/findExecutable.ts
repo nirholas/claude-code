@@ -15,3 +15,4 @@ export function findExecutable(
   const resolved = whichSync(exe)
   return { cmd: resolved ?? exe, args }
 }
+

@@ -600,3 +600,4 @@ export async function cleanupOldMessageFilesInBackground(): Promise<void> {
     await cleanupNpmCacheForAnthropicPackages()
   }
 }
+

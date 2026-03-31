@@ -74,3 +74,4 @@ export function usePromptInputPlaceholder({
 
   return placeholder
 }
+

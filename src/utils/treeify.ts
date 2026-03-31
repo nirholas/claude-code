@@ -168,3 +168,4 @@ export function treeify(obj: TreeNode, options: TreeifyOptions = {}): string {
   growBranch(obj, '', true)
   return lines.join('\n')
 }
+

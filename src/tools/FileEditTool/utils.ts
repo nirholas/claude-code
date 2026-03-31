@@ -773,3 +773,4 @@ export function areFileEditsInputsEquivalent(
 
   return areFileEditsEquivalent(input1.edits, input2.edits, fileContent)
 }
+

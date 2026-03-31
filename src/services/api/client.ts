@@ -360,7 +360,19 @@ function buildFetch(
   source: string | undefined,
 ): ClientOptions['fetch'] {
   // eslint-disable-next-line eslint-plugin-n/no-unsupported-features/node-builtins
-  const inner = fetchOverride ?? globalThis.fetch
+  let inner = fetchOverride ?? globalThis.fetch
+
+  // Wrap with x402 payment handler for automatic 402 Payment Required handling
+  try {
+    const { wrapFetchWithX402, isX402Enabled } =
+      require('../x402/index.js') as typeof import('../x402/index.js')
+    if (isX402Enabled()) {
+      inner = wrapFetchWithX402(inner as typeof globalThis.fetch) as typeof inner
+    }
+  } catch {
+    // x402 module not available, skip
+  }
+
   // Only send to the first-party API — Bedrock/Vertex/Foundry don't log it
   // and unknown headers risk rejection by strict proxies (inc-4029 class).
   const injectClientRequestId =
@@ -387,3 +399,4 @@ function buildFetch(
     return inner(input, { ...init, headers })
   }
 }
+

@@ -41,3 +41,5 @@ export async function call(): Promise<LocalCommandResult> {
   const result = await playAnimation(skillDir)
   return { type: 'text' as const, value: result.message }
 }
+
+

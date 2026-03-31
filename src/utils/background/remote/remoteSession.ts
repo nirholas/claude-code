@@ -96,3 +96,4 @@ export async function checkBackgroundRemoteSessionEligibility({
 
   return errors
 }
+

@@ -66,3 +66,4 @@ export async function openBrowser(url: string): Promise<boolean> {
     return false
   }
 }
+

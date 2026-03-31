@@ -51,3 +51,4 @@ export async function isBinaryInstalled(command: string): Promise<boolean> {
 export function clearBinaryCache(): void {
   binaryCache.clear()
 }
+

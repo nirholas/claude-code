@@ -207,3 +207,4 @@ export function usePermissionRequestLogging(
     })
   }, [toolUseConfirm, unaryEvent, setAppState])
 }
+

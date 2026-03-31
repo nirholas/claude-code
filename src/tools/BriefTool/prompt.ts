@@ -20,3 +20,4 @@ If you can answer right away, send the answer. If you need to go look — run a 
 For longer work: ack → work → result. Between those, send a checkpoint when something useful happened — a decision you made, a surprise you hit, a phase boundary. Skip the filler ("running tests...") — a checkpoint earns its place by carrying information.
 
 Keep messages tight — the decision, the file:line, the PR number. Second person always ("your config"), never third.`
+

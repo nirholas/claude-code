@@ -71,3 +71,4 @@ export const EVENT_HANDLER_PROPS = new Set<string>([
   'onMouseEnter',
   'onMouseLeave',
 ])
+

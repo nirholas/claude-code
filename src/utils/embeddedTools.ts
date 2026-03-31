@@ -27,3 +27,4 @@ export function hasEmbeddedSearchTools(): boolean {
 export function embeddedSearchToolsBinaryPath(): string {
   return process.execPath
 }
+

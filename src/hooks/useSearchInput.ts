@@ -362,3 +362,4 @@ export function useSearchInput({
 
   return { query, setQuery, cursorOffset, handleKeyDown }
 }
+

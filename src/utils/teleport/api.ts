@@ -464,3 +464,4 @@ export async function updateSessionTitle(
     return false
   }
 }
+

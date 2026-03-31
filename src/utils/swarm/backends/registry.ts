@@ -462,3 +462,4 @@ export function resetBackendDetection(): void {
   backendsRegistered = false
   inProcessFallbackActive = false
 }
+

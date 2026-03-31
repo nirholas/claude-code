@@ -291,3 +291,4 @@ class DebugLogger implements Logger {
     logForDebugging(format(message, ...args), { level: 'error' })
   }
 }
+

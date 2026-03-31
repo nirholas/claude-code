@@ -164,3 +164,4 @@ function sortHookEnvFiles(a: string, b: string): number {
   const bIndex = parseInt(bMatch?.[2] || '0', 10)
   return aIndex - bIndex
 }
+

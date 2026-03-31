@@ -395,3 +395,4 @@ export async function persistFileSnapshotIfRemote(): Promise<void> {
     logError(error)
   }
 }
+

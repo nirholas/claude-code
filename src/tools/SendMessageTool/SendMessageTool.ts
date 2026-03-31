@@ -915,3 +915,4 @@ export const SendMessageTool: Tool<InputSchema, SendMessageToolOutput> =
     renderToolUseMessage,
     renderToolResultMessage,
   } satisfies ToolDef<InputSchema, SendMessageToolOutput>)
+

@@ -67,3 +67,4 @@ export function markGitUnavailable(): void {
 export function clearGitAvailabilityCache(): void {
   checkGitAvailable.cache?.clear?.()
 }
+

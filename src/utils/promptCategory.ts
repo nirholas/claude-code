@@ -47,3 +47,4 @@ export function getQuerySourceForREPL(): QuerySource {
     ? (`repl_main_thread:outputStyle:${style}` as QuerySource)
     : 'repl_main_thread:outputStyle:custom'
 }
+

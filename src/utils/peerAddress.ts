@@ -19,3 +19,4 @@ export function parseAddress(to: string): {
   if (to.startsWith('/')) return { scheme: 'uds', target: to }
   return { scheme: 'other', target: to }
 }
+

@@ -377,3 +377,4 @@ function isSaveMessage(
     typeof data[1].text === 'string'
   )
 }
+

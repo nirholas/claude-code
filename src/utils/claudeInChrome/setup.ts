@@ -398,3 +398,4 @@ export async function isChromeExtensionInstalled(): Promise<boolean> {
   }
   return isChromeExtensionInstalledPortable(browserPaths, logForDebugging)
 }
+

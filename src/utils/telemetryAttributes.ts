@@ -69,3 +69,4 @@ export function getTelemetryAttributes(): Attributes {
 
   return attributes
 }
+

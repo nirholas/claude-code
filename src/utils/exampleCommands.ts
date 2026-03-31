@@ -182,3 +182,4 @@ export const refreshExampleCommands = memoize(async (): Promise<void> => {
     })
   }
 })
+

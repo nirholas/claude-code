@@ -108,3 +108,4 @@ export function useDiffData(): DiffData {
     return { stats, files, hunks, loading: false }
   }, [diffResult, hunks, loading])
 }
+

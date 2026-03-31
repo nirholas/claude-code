@@ -360,3 +360,4 @@ export function _resetErrorLogForTesting(): void {
   errorQueue.length = 0
   inMemoryErrorLog = []
 }
+

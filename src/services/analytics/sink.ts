@@ -112,3 +112,4 @@ export function initializeAnalyticsSink(): void {
     logEventAsync: logEventAsyncImpl,
   })
 }
+

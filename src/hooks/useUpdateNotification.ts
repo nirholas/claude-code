@@ -32,3 +32,4 @@ export function useUpdateNotification(
   }
   return null
 }
+

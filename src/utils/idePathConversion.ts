@@ -88,3 +88,4 @@ export function checkWSLDistroMatch(
   }
   return true // Not a WSL UNC path, so no distro mismatch
 }
+

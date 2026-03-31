@@ -37,3 +37,4 @@ export class EventEmitter extends NodeEventEmitter {
     return true
   }
 }
+

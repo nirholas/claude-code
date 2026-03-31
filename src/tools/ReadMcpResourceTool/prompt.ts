@@ -14,3 +14,4 @@ Parameters:
 - server (required): The name of the MCP server from which to read the resource
 - uri (required): The URI of the resource to read
 `
+

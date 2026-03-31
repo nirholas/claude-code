@@ -80,3 +80,5 @@ export const DEFAULT_POLL_CONFIG: PollIntervalConfig = {
   // (pre-v2 clients read the old key, new clients ignore it).
   session_keepalive_interval_v2_ms: 120_000,
 }
+
+

@@ -47,3 +47,4 @@ const StdinContext = createContext<Props>({
 StdinContext.displayName = 'InternalStdinContext'
 
 export default StdinContext
+

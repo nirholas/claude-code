@@ -20,3 +20,5 @@ export default {
   },
   load: () => import('./passes.js'),
 } satisfies Command
+
+

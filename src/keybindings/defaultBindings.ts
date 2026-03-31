@@ -338,3 +338,4 @@ export const DEFAULT_BINDINGS: KeybindingBlock[] = [
     },
   },
 ]
+

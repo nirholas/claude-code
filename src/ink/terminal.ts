@@ -246,3 +246,4 @@ export function writeDiffToTerminal(
   if (useSync) buffer += ESU
   terminal.stdout.write(buffer)
 }
+

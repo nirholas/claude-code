@@ -172,3 +172,4 @@ export async function installPluginsForHeadless(): Promise<boolean> {
     logEvent('tengu_headless_plugin_install', metrics)
   }
 }
+

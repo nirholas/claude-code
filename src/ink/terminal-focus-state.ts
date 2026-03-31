@@ -45,3 +45,4 @@ export function resetTerminalFocusState(): void {
     cb()
   }
 }
+

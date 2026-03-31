@@ -117,3 +117,4 @@ function detectFromColorFgBg(): SystemTheme | undefined {
   // 0–6 and 8 are dark ANSI colors; 7 (white) and 9–15 (bright) are light.
   return bgNum <= 6 || bgNum === 8 ? 'dark' : 'light'
 }
+

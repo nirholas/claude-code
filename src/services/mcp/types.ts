@@ -256,3 +256,4 @@ export interface MCPCliState {
   resources: Record<string, ServerResource[]>
   normalizedNames?: Record<string, string> // Maps normalized names to original names
 }
+

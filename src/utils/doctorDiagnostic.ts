@@ -623,3 +623,4 @@ export async function getDoctorDiagnostic(): Promise<DiagnosticInfo> {
 
   return diagnostic
 }
+

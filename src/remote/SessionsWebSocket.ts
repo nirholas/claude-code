@@ -402,3 +402,4 @@ export class SessionsWebSocket {
     }, 500)
   }
 }
+

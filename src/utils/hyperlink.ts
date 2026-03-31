@@ -37,3 +37,4 @@ export function createHyperlink(
   const coloredText = chalk.blue(displayText)
   return `${OSC8_START}${url}${OSC8_END}${coloredText}${OSC8_START}${OSC8_END}`
 }
+

@@ -342,3 +342,4 @@ function formatLimitReachedText(
 
   return `You've hit your ${limit}${resetMessage}`
 }
+

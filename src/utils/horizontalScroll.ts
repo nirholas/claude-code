@@ -135,3 +135,4 @@ export function calculateHorizontalScrollWindow(
     showRightArrow: endIndex < totalItems,
   }
 }
+

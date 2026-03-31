@@ -328,3 +328,5 @@ export async function authLogout(): Promise<void> {
   process.stdout.write('Successfully logged out from your Anthropic account.\n')
   process.exit(0)
 }
+
+

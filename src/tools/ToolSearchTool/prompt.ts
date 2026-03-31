@@ -119,3 +119,4 @@ export function formatDeferredToolLine(tool: Tool): string {
 export function getPrompt(): string {
   return PROMPT_HEAD + getToolLocationHint() + PROMPT_TAIL
 }
+

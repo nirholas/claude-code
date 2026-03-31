@@ -190,3 +190,4 @@ export function clearHookEventState(): void {
   pendingEvents.length = 0
   allHookEventsEnabled = false
 }
+

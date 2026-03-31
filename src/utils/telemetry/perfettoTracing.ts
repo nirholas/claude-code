@@ -1118,3 +1118,4 @@ export const MAX_EVENTS_FOR_TESTING = MAX_EVENTS
 export function evictOldestEventsForTesting(): void {
   evictOldestEvents()
 }
+

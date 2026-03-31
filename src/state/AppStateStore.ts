@@ -567,3 +567,4 @@ export function getDefaultAppState(): AppState {
     fastMode: false,
   }
 }
+

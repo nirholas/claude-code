@@ -168,3 +168,4 @@ export function getEnterPlanModeToolPrompt(): string {
     ? getEnterPlanModeToolPromptAnt()
     : getEnterPlanModeToolPromptExternal()
 }
+

@@ -1492,3 +1492,4 @@ async function installFromArtifactory(command: string): Promise<string> {
     throw error
   }
 }
+

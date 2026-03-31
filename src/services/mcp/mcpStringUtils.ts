@@ -104,3 +104,4 @@ export function extractMcpToolDisplayName(userFacingName: string): string {
   // If no dash found, return the string without (MCP)
   return withoutSuffix
 }
+

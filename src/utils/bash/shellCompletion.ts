@@ -257,3 +257,4 @@ export async function getShellCompletions(
     return [] // Silent fail
   }
 }
+

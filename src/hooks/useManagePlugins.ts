@@ -302,3 +302,4 @@ export function useManagePlugins({
     // consumes it via refreshActivePlugins().
   }, [enabled, needsRefresh, addNotification])
 }
+

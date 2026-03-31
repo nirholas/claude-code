@@ -305,3 +305,4 @@ function getFlushIntervalMs(): number {
     DEFAULT_FLUSH_INTERVAL_MS
   )
 }
+

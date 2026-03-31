@@ -24,3 +24,4 @@ export function toInkColor(color: string | undefined): TextProps['color'] {
   // Fall back to raw ANSI color for unknown colors
   return `ansi:${color}` as TextProps['color']
 }
+

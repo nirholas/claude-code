@@ -148,3 +148,4 @@ export function notifySessionMetadataChanged(
 export function notifyPermissionModeChanged(mode: PermissionMode): void {
   permissionModeListener?.(mode)
 }
+

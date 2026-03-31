@@ -22,3 +22,4 @@ export function useExitOnCtrlCDWithKeybindings(
 ): ExitState {
   return useExitOnCtrlCD(useKeybindings, onInterrupt, onExit, isActive)
 }
+

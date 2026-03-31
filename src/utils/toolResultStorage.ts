@@ -1038,3 +1038,4 @@ function getFileSystemErrorMessage(error: Error): string {
   }
   return error.message
 }
+

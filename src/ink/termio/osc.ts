@@ -491,3 +491,4 @@ export function tabStatus(fields: TabStatusAction): string {
     )
   return osc(OSC.TAB_STATUS, parts.join(';'))
 }
+

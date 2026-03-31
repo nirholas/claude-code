@@ -332,3 +332,4 @@ function encodePng(px: Uint8Array, width: number, height: number): Buffer {
     chunk('IEND', new Uint8Array(0)),
   ])
 }
+

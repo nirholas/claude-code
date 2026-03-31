@@ -746,3 +746,4 @@ export function parseFileSpecs(fileSpecs: string[]): File[] {
 
   return files
 }
+

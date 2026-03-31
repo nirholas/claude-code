@@ -463,3 +463,4 @@ export function createFailedCommand(preSpawnError: string): ShellCommand {
     cleanup(): void {},
   }
 }
+

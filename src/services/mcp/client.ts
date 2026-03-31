@@ -3346,3 +3346,4 @@ export async function setupSdkMcpClients(
 
   return { clients, tools }
 }
+

@@ -119,3 +119,4 @@ export function looksLikeISO8601(input: string): boolean {
   // ISO 8601 datetime: YYYY-MM-DDTHH:MM:SS...
   return /^\d{4}-\d{2}-\d{2}(T|$)/.test(input.trim())
 }
+

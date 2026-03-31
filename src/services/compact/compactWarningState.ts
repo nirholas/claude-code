@@ -16,3 +16,4 @@ export function suppressCompactWarning(): void {
 export function clearCompactWarningSuppression(): void {
   compactWarningStore.setState(() => false)
 }
+

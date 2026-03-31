@@ -307,3 +307,4 @@ export function clearAllAsyncHooks(): void {
   }
   pendingHooks.clear()
 }
+

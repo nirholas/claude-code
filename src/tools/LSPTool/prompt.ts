@@ -19,3 +19,4 @@ All operations require:
 - character: The character offset (1-based, as shown in editors)
 
 Note: LSP servers must be configured for the file type. If no server is available, an error will be returned.`
+

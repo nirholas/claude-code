@@ -44,3 +44,4 @@ export function hashPair(a: string, b: string): string {
     .update(b)
     .digest('hex')
 }
+

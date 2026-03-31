@@ -74,3 +74,4 @@ export class Stream<T> implements AsyncIterator<T> {
     return Promise.resolve({ done: true, value: undefined })
   }
 }
+

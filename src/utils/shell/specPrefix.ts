@@ -239,3 +239,4 @@ async function shouldStopAtArg(
   // For actual files/URLs, always stop regardless of context
   return true
 }
+

@@ -997,3 +997,4 @@ export const __test = {
   detectColorMode,
   detectLanguage,
 }
+

@@ -110,3 +110,4 @@ export function isRemoteManagedSettingsEligible(): boolean {
 
   return (cached = setEligibility(false))
 }
+

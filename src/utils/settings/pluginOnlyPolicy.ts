@@ -58,3 +58,4 @@ const ADMIN_TRUSTED_SOURCES: ReadonlySet<string> = new Set([
 export function isSourceAdminTrusted(source: string | undefined): boolean {
   return source !== undefined && ADMIN_TRUSTED_SOURCES.has(source)
 }
+

@@ -12,3 +12,4 @@ export function useTimeout(delay: number, resetTrigger?: number): boolean {
 
   return isElapsed
 }
+

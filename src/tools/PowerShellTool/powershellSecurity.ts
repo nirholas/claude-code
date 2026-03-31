@@ -1088,3 +1088,4 @@ export function powershellCommandIsSafe(
   // All checks passed
   return { behavior: 'passthrough' }
 }
+

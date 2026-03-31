@@ -361,3 +361,4 @@ export function getPluginErrorMessage(error: PluginError): string {
       return `Plugin "${error.plugin}" not cached at ${error.installPath} — run /plugins to refresh`
   }
 }
+

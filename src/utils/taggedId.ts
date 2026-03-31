@@ -52,3 +52,4 @@ export function toTaggedId(tag: string, uuid: string): string {
   const n = uuidToBigInt(uuid)
   return `${tag}_${VERSION}${base58Encode(n)}`
 }
+

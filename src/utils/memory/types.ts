@@ -10,3 +10,4 @@ export const MEMORY_TYPE_VALUES = [
 ] as const
 
 export type MemoryType = (typeof MEMORY_TYPE_VALUES)[number]
+

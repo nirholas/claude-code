@@ -94,3 +94,4 @@ export function useTerminalViewport(): [
 
   return [setElement, entryRef.current]
 }
+

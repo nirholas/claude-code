@@ -1528,3 +1528,4 @@ export class MeasuredText {
     return boundaries[lo]!
   }
 }
+

@@ -56,3 +56,4 @@ export function recordShownTip(tip: Tip): void {
     cooldownSessions: tip.cooldownSessions,
   })
 }
+

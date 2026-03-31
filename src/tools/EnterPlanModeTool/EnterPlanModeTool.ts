@@ -124,3 +124,4 @@ Remember: DO NOT write or edit any files yet. This is a read-only exploration an
     }
   },
 } satisfies ToolDef<InputSchema, Output>)
+

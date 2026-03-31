@@ -13,3 +13,5 @@ const compact = {
 } satisfies Command
 
 export default compact
+
+

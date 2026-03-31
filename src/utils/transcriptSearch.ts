@@ -200,3 +200,4 @@ export function toolResultSearchText(r: unknown): string {
   }
   return parts.join('\n')
 }
+

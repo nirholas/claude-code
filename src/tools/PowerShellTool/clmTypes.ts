@@ -209,3 +209,4 @@ export function normalizeTypeName(name: string): string {
 export function isClmAllowedType(typeName: string): boolean {
   return CLM_ALLOWED_TYPES.has(normalizeTypeName(typeName))
 }
+

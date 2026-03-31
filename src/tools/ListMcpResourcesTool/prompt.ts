@@ -18,3 +18,4 @@ Parameters:
 - server (optional): The name of a specific MCP server to get resources from. If not provided,
   resources from all servers will be returned.
 `
+

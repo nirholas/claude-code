@@ -214,3 +214,4 @@ export function hasCustomOutputStyle(): boolean {
   const style = getSettings_DEPRECATED()?.outputStyle
   return style !== undefined && style !== DEFAULT_OUTPUT_STYLE_NAME
 }
+

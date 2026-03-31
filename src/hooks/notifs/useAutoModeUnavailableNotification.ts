@@ -54,3 +54,4 @@ export function useAutoModeUnavailableNotification(): void {
     })
   }, [mode, isAutoModeAvailable, addNotification])
 }
+

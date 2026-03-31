@@ -39,3 +39,4 @@ export function useStartupNotification(
       .catch(logError)
   }, [addNotification])
 }
+

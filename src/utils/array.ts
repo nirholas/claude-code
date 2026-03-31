@@ -11,3 +11,4 @@ export function count<T>(arr: readonly T[], pred: (x: T) => unknown): number {
 export function uniq<T>(xs: Iterable<T>): T[] {
   return [...new Set(xs)]
 }
+

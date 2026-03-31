@@ -29,3 +29,4 @@ export type RemoteManagedSettingsFetchResult = {
   error?: string
   skipRetry?: boolean // If true, don't retry on failure (e.g., auth errors)
 }
+

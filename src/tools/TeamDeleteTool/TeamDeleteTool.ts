@@ -137,3 +137,4 @@ export const TeamDeleteTool: Tool<InputSchema, Output> = buildTool({
   renderToolUseMessage,
   renderToolResultMessage,
 } satisfies ToolDef<InputSchema, Output>)
+

@@ -41,3 +41,4 @@ export function unlock(file: string, options?: UnlockOptions): Promise<void> {
 export function check(file: string, options?: CheckOptions): Promise<boolean> {
   return getLockfile().check(file, options)
 }
+

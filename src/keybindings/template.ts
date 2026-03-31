@@ -50,3 +50,4 @@ export function generateKeybindingsTemplate(): string {
 
   return jsonStringify(config, null, 2) + '\n'
 }
+

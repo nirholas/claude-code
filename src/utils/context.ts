@@ -219,3 +219,4 @@ export function getModelMaxOutputTokens(model: string): {
 export function getMaxThinkingTokensForModel(model: string): number {
   return getModelMaxOutputTokens(model).upperLimit - 1
 }
+

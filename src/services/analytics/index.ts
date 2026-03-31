@@ -171,3 +171,4 @@ export function _resetForTesting(): void {
   sink = null
   eventQueue.length = 0
 }
+

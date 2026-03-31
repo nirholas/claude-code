@@ -233,3 +233,4 @@ function checkAutoCompactDisabled(
     })
   }
 }
+

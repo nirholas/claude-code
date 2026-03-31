@@ -110,3 +110,4 @@ export function setupVscodeSdkMcp(sdkClients: MCPServerConnection[]): void {
     })
   }
 }
+

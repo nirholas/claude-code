@@ -302,3 +302,4 @@ export function quote(args: ReadonlyArray<unknown>): string {
     throw new Error('Failed to quote shell arguments safely')
   }
 }
+

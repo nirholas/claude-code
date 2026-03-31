@@ -44,3 +44,4 @@ export function buildQueryConfig(): QueryConfig {
     },
   }
 }
+

@@ -288,3 +288,4 @@ export type AggregatedHookResult = {
   permissionRequestResult?: PermissionRequestResult
   retry?: boolean
 }
+

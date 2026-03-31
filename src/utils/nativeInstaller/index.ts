@@ -16,3 +16,4 @@ export {
   removeInstalledSymlink,
   type SetupMessage,
 } from './installer.js'
+

@@ -137,3 +137,4 @@ function hasRTLCharacters(text: string): boolean {
     text,
   )
 }
+

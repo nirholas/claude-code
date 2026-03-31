@@ -324,6 +324,43 @@ export async function getWithPermittedRedirects(
       throw new EgressBlockedError(hostname)
     }
 
+    // Handle HTTP 402 Payment Required via x402 protocol
+    if (
+      axios.isAxiosError(error) &&
+      error.response?.status === 402
+    ) {
+      try {
+        const { isX402Enabled, handlePaymentRequired, getX402SessionSpentUSD } =
+          require('../../services/x402/index.js') as typeof import('../../services/x402/index.js')
+
+        const paymentHeader = error.response.headers['x-payment-required']
+        if (isX402Enabled() && paymentHeader) {
+          const result = handlePaymentRequired(
+            paymentHeader,
+            getX402SessionSpentUSD(),
+          )
+
+          if (result) {
+            // Retry request with payment header
+            return await axios.get(url, {
+              signal,
+              timeout: FETCH_TIMEOUT_MS,
+              maxRedirects: 0,
+              responseType: 'arraybuffer',
+              maxContentLength: MAX_HTTP_CONTENT_LENGTH,
+              headers: {
+                Accept: 'text/markdown, text/html, */*',
+                'User-Agent': getWebFetchUserAgent(),
+                'x-payment': result.paymentHeader,
+              },
+            })
+          }
+        }
+      } catch {
+        // x402 handling failed, fall through to original error
+      }
+    }
+
     throw error
   }
 }
@@ -528,3 +565,4 @@ export async function applyPromptToMarkdown(
   }
   return 'No response from model'
 }
+

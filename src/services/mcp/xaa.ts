@@ -509,3 +509,4 @@ export async function performCrossAppAccess(
 
   return { ...tokens, authorizationServerUrl: asMeta.issuer }
 }
+

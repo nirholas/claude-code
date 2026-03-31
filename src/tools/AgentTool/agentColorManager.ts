@@ -64,3 +64,4 @@ export function setAgentColor(
     agentColorMap.set(agentType, color)
   }
 }
+

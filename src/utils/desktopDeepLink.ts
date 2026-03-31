@@ -234,3 +234,4 @@ export async function openCurrentSessionInDesktop(): Promise<{
 
   return { success: true, deepLinkUrl }
 }
+

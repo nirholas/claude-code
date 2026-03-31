@@ -527,3 +527,4 @@ export function useTextInput({
     viewportCharEnd: cursor.getViewportCharEnd(maxVisibleLines),
   }
 }
+

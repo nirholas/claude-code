@@ -7,3 +7,4 @@ export function ifNotInteger(value: number | undefined, name: string): void {
     level: 'warn',
   })
 }
+

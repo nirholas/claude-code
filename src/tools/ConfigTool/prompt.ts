@@ -91,3 +91,4 @@ ${lines.join('\n')}`
 - model - Override the default model (sonnet, opus, haiku, best, or full model ID)`
   }
 }
+

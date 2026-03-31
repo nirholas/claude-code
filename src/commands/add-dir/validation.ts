@@ -108,3 +108,5 @@ export function addDirHelpMessage(result: AddDirectoryResult): string {
       return `Added ${chalk.bold(result.absolutePath)} as a working directory.`
   }
 }
+
+

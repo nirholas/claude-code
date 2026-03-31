@@ -37,3 +37,4 @@ export function useMemoryUsage(): MemoryUsageInfo | null {
 
   return memoryUsage
 }
+

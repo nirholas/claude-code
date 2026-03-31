@@ -58,3 +58,4 @@ export function parseSlashCommand(input: string): ParsedSlashCommand | null {
     isMcp,
   }
 }
+

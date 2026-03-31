@@ -153,3 +153,4 @@ export function normalizePathForConfigKey(path: string): string {
   // This is safe because forward slashes work in Windows paths for most operations
   return normalized.replace(/\\/g, '/')
 }
+

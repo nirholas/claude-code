@@ -105,3 +105,4 @@ export type EventTarget = {
   parentNode: EventTarget | undefined
   _eventHandlers?: Record<string, unknown>
 }
+

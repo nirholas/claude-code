@@ -121,3 +121,4 @@ export function createPowerShellProvider(shellPath: string): ShellProvider {
     },
   }
 }
+

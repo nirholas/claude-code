@@ -17,3 +17,4 @@ export function widestLine(string: string): number {
 
   return maxWidth
 }
+

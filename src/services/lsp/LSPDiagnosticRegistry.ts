@@ -384,3 +384,4 @@ export function clearDeliveredDiagnosticsForFile(fileUri: string): void {
 export function getPendingLSPDiagnosticCount(): number {
   return pendingDiagnostics.size
 }
+

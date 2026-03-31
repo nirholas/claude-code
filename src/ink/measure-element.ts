@@ -21,3 +21,4 @@ const measureElement = (node: DOMElement): Output => ({
 })
 
 export default measureElement
+

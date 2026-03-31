@@ -21,3 +21,4 @@ export function generateCodeChallenge(verifier: string): string {
 export function generateState(): string {
   return base64URLEncode(randomBytes(32))
 }
+

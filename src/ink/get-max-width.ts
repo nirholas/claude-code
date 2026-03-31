@@ -25,3 +25,4 @@ const getMaxWidth = (yogaNode: LayoutNode): number => {
 }
 
 export default getMaxWidth
+

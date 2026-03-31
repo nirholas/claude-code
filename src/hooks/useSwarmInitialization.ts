@@ -79,3 +79,4 @@ export function useSwarmInitialization(
     }
   }, [setAppState, initialMessages, enabled])
 }
+

@@ -27,3 +27,4 @@ export async function getGhAuthStatus(): Promise<GhAuthStatus> {
   })
   return exitCode === 0 ? 'authenticated' : 'not_authenticated'
 }
+

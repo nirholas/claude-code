@@ -205,3 +205,4 @@ export function resetSessionMemoryState(): void {
   lastSummarizedMessageId = undefined
   extractionStartedAt = undefined
 }
+

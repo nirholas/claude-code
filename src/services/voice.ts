@@ -523,3 +523,4 @@ export function stopRecording(): void {
     activeRecorder = null
   }
 }
+

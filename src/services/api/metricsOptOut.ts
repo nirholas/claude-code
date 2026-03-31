@@ -157,3 +157,4 @@ export async function checkMetricsEnabled(): Promise<MetricsStatus> {
 export const _clearMetricsEnabledCacheForTesting = (): void => {
   memoizedCheckMetrics.cache.clear()
 }
+

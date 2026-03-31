@@ -176,3 +176,4 @@ function looksLikeRealHostname(host: string): boolean {
   // contains a hyphen.
   return /^[a-zA-Z]+$/.test(lastSegment)
 }
+

@@ -208,3 +208,5 @@ export async function enrollTrustedDevice(): Promise<void> {
     logForDebugging(`[trusted-device] Enrollment error: ${errorMessage(err)}`)
   }
 }
+
+

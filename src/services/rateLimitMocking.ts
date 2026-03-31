@@ -142,3 +142,4 @@ export function isMockRateLimitError(error: APIError): boolean {
  * Check if /mock-limits command is currently active (for UI purposes)
  */
 export { shouldProcessMockLimits }
+

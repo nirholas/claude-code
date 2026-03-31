@@ -19,3 +19,4 @@ export function notifyCommandLifecycle(
 ): void {
   listener?.(uuid, state)
 }
+

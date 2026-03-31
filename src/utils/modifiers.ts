@@ -34,3 +34,4 @@ export function isModifierPressed(modifier: ModifierKey): boolean {
     require('modifiers-napi') as { isModifierPressed: (m: string) => boolean }
   return nativeIsModifierPressed(modifier)
 }
+

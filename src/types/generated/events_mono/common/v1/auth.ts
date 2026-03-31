@@ -98,3 +98,4 @@ interface MessageFns<T> {
   create<I extends Exact<DeepPartial<T>, I>>(base?: I): T
   fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T
 }
+

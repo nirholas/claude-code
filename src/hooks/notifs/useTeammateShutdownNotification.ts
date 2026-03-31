@@ -76,3 +76,4 @@ export function useTeammateLifecycleNotification(): void {
     }
   }, [tasks, addNotification])
 }
+

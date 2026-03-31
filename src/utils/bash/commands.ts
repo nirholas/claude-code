@@ -1337,3 +1337,4 @@ function reconstructCommand(kept: ParseEntry[], originalCmd: string): string {
 
   return result.trim() || originalCmd
 }
+

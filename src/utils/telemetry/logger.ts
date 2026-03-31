@@ -24,3 +24,4 @@ export class ClaudeCodeDiagLogger implements DiagLogger {
     return
   }
 }
+

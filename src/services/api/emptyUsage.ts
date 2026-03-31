@@ -20,3 +20,4 @@ export const EMPTY_USAGE: Readonly<NonNullableUsage> = {
   iterations: [],
   speed: 'standard',
 }
+

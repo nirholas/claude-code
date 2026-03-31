@@ -58,3 +58,4 @@ export async function fetchAndStoreClaudeCodeFirstTokenDate(): Promise<void> {
     logError(error)
   }
 }
+

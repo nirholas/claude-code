@@ -288,3 +288,4 @@ function normalizeAssistantMessageForSDK(
     content: normalizedContent,
   }
 }
+

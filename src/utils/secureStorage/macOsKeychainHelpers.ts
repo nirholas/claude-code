@@ -109,3 +109,4 @@ export function primeKeychainCacheFromPrefetch(stdout: string | null): void {
   }
   keychainCacheState.cache = { data, cachedAt: Date.now() }
 }
+

@@ -275,3 +275,4 @@ export function addItemToJSONCArray(content: string, newItem: unknown): string {
     return jsonStringify([newItem], null, 4)
   }
 }
+

@@ -2677,3 +2677,4 @@ export function checkSemantics(commands: SimpleCommand[]): SemanticCheckResult {
   }
   return { ok: true }
 }
+

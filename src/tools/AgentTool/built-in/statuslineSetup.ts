@@ -142,3 +142,4 @@ export const STATUSLINE_SETUP_AGENT: BuiltInAgentDefinition = {
   color: 'orange',
   getSystemPrompt: () => STATUSLINE_SYSTEM_PROMPT,
 }
+

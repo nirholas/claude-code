@@ -28,3 +28,4 @@ export function color(
     return colorize(text, getTheme(theme)[c as keyof Theme], type)
   }
 }
+

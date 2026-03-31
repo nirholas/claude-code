@@ -60,3 +60,4 @@ export function useDoublePress(
     lastPressRef.current = now
   }, [setPending, onDoublePress, onFirstPress, clearTimeoutSafe])
 }
+

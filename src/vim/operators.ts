@@ -554,3 +554,4 @@ export function executeOperatorGg(
   applyOperator(op, range.from, range.to, ctx, range.linewise)
   ctx.recordChange({ type: 'operator', op, motion: 'gg', count })
 }
+

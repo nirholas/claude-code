@@ -237,3 +237,4 @@ export function installAsciicastRecorder(): void {
 
   logForDebugging(`[asciicast] Recording to ${filePath}`)
 }
+

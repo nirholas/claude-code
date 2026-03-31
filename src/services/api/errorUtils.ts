@@ -258,3 +258,4 @@ export function formatAPIError(error: APIError): string {
     ? sanitizedMessage
     : error.message
 }
+

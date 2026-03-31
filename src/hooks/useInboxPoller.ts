@@ -967,3 +967,4 @@ export function useInboxPoller({
     // The ref guard is a safety measure to ensure initial poll only happens once
   }, [enabled, poll, store])
 }
+

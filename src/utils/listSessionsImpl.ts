@@ -452,3 +452,4 @@ export async function listSessionsImpl(
   if (!doStat) return readAllAndSort(candidates)
   return applySortAndLimit(candidates, limit, off)
 }
+

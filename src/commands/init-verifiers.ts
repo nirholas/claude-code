@@ -260,3 +260,5 @@ After writing the skill file(s), inform the user:
 } satisfies Command
 
 export default command
+
+

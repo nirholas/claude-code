@@ -4434,3 +4434,4 @@ function isArithStop(P: ParseState, stop: string): boolean {
   if (stop === ':}') return c === ':' || c === '}'
   return c === '' || c === '\n'
 }
+

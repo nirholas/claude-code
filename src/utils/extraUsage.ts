@@ -21,3 +21,4 @@ export function isBilledAsExtraUsage(
 
   return isOpus46 || isSonnet46
 }
+

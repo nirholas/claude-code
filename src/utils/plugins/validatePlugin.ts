@@ -901,3 +901,4 @@ export async function validateManifest(
     }
   }
 }
+

@@ -88,3 +88,4 @@ export function getSymbolAtPosition(
     return null
   }
 }
+

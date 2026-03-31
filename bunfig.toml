@@ -1,0 +1,4 @@
+# bunfig.toml — Bun configuration for development mode
+# The plugin intercepts `bun:bundle` imports → src/shims/bun-bundle.ts
+
+preload = ["./scripts/bun-plugin-shims.ts"]

@@ -81,3 +81,4 @@ export function incrementProjectOnboardingSeenCount(): void {
     projectOnboardingSeenCount: current.projectOnboardingSeenCount + 1,
   }))
 }
+

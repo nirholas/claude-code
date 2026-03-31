@@ -159,3 +159,4 @@ export const RemoteTriggerTool = buildTool({
   renderToolUseMessage,
   renderToolResultMessage,
 } satisfies ToolDef<InputSchema, Output>)
+

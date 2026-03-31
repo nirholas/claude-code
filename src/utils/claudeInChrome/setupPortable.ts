@@ -231,3 +231,4 @@ export function isChromeExtensionInstalled(log?: Logger): Promise<boolean> {
   const browserPaths = getAllBrowserDataPathsPortable()
   return isChromeExtensionInstalledPortable(browserPaths, log)
 }
+

@@ -29,3 +29,4 @@ export function useShowFastIconHint(showFastIcon: boolean): boolean {
 
   return showHint
 }
+

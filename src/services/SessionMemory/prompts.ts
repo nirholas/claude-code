@@ -322,3 +322,4 @@ function flushSessionSection(
   keptLines.push('\n[... section truncated for length ...]')
   return { lines: keptLines, wasTruncated: true }
 }
+

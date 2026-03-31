@@ -71,3 +71,4 @@ export class Mailbox {
     this.changed.emit()
   }
 }
+

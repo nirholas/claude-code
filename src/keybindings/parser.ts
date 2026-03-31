@@ -201,3 +201,4 @@ export function parseBindings(blocks: KeybindingBlock[]): ParsedBinding[] {
   }
   return bindings
 }
+

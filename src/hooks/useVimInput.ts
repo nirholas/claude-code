@@ -314,3 +314,4 @@ export function useVimInput(props: UseVimInputProps): VimInputState {
     setMode: setModeExternal,
   }
 }
+

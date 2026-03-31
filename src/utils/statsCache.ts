@@ -432,3 +432,4 @@ export function getYesterdayDateString(): string {
 export function isDateBefore(date1: string, date2: string): boolean {
   return date1 < date2
 }
+

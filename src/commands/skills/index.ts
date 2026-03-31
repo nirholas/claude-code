@@ -8,3 +8,5 @@ const skills = {
 } satisfies Command
 
 export default skills
+
+

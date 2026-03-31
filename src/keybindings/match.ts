@@ -118,3 +118,4 @@ export function matchesBinding(
   if (!keystroke) return false
   return matchesKeystroke(input, key, keystroke)
 }
+

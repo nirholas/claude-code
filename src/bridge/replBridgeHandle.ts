@@ -34,3 +34,5 @@ export function getSelfBridgeCompatId(): string | undefined {
   const h = getReplBridgeHandle()
   return h ? toCompatSessionId(h.bridgeSessionId) : undefined
 }
+
+

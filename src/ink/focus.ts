@@ -179,3 +179,4 @@ export function getRootNode(node: DOMElement): DOMElement {
 export function getFocusManager(node: DOMElement): FocusManager {
   return getRootNode(node).focusManager!
 }
+

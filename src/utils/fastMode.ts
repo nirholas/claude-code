@@ -530,3 +530,4 @@ export async function prefetchFastModeStatus(): Promise<void> {
   inflightPrefetch = doFetch()
   return inflightPrefetch
 }
+

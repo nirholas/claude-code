@@ -126,3 +126,4 @@ export function resetDetectionCache(): void {
   isInsideTmuxCached = null
   isInITerm2Cached = null
 }
+

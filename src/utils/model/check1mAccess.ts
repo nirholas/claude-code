@@ -70,3 +70,4 @@ export function checkSonnet1mAccess(): boolean {
   // Non-subscribers (API/PAYG) have access
   return true
 }
+

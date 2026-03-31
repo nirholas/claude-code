@@ -218,3 +218,4 @@ function prependBaseDir(
   }
   return [{ type: 'text', text: prefix }, ...blocks]
 }
+

@@ -65,3 +65,4 @@ export const SYNC_KEYS = {
     `projects/${projectId}/.claude/settings.local.json`,
   projectMemory: (projectId: string) => `projects/${projectId}/CLAUDE.local.md`,
 } as const
+

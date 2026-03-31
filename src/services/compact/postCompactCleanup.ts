@@ -75,3 +75,4 @@ export function runPostCompactCleanup(querySource?: QuerySource): void {
   }
   clearSessionMessagesCache()
 }
+

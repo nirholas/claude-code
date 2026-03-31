@@ -202,6 +202,7 @@ const usageReport: Command = {
 }
 import oauthRefresh from './commands/oauth-refresh/index.js'
 import debugToolCall from './commands/debug-tool-call/index.js'
+import x402 from './commands/x402/index.js'
 import { getSettingSourceName } from './utils/settings/constants.js'
 import {
   type Command,
@@ -317,6 +318,7 @@ const COMMANDS = memoize((): Command[] => [
   usage,
   usageReport,
   vim,
+  x402,
   ...(webCmd ? [webCmd] : []),
   ...(forkCmd ? [forkCmd] : []),
   ...(buddy ? [buddy] : []),
@@ -752,3 +754,5 @@ export function formatDescriptionWithSource(cmd: Command): string {
 
   return `${cmd.description} (${getSettingSourceName(cmd.source)})`
 }
+
+

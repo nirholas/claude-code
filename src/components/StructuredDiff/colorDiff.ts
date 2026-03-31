@@ -35,3 +35,4 @@ export function getSyntaxTheme(themeName: string): SyntaxTheme | null {
     ? nativeGetSyntaxTheme(themeName)
     : null
 }
+

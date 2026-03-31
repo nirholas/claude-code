@@ -66,3 +66,4 @@ export function peekForStdinData(
     stream.once('data', onFirstData)
   })
 }
+

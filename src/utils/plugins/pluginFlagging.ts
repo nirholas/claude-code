@@ -206,3 +206,4 @@ export async function removeFlaggedPlugin(pluginId: string): Promise<void> {
   cache = rest
   await writeToDisk(rest)
 }
+

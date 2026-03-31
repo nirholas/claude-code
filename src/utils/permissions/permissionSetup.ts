@@ -1530,3 +1530,4 @@ export function transitionPlanAutoMode(
   setNeedsAutoModeExitAttachment(true)
   return restoreDangerousPermissions(context)
 }
+

@@ -12,3 +12,4 @@ export function getMaxOutputLength(): number {
   )
   return result.effective
 }
+

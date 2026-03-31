@@ -316,3 +316,4 @@ function buildSuggestions(ruleContent: string): PermissionUpdate[] {
     },
   ]
 }
+

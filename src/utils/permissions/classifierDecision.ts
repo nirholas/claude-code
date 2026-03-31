@@ -96,3 +96,4 @@ const SAFE_YOLO_ALLOWLISTED_TOOLS = new Set([
 export function isAutoModeAllowlistedTool(toolName: string): boolean {
   return SAFE_YOLO_ALLOWLISTED_TOOLS.has(toolName)
 }
+

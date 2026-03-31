@@ -242,3 +242,4 @@ export function resolveKeyWithChordState(
 
   return { type: 'none' }
 }
+

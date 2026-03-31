@@ -915,3 +915,4 @@ export function applySelectionOverlay(
     }
   }
 }
+

@@ -493,3 +493,4 @@ function updateLastSummarizedMessageIdIfSafe(messages: Message[]): void {
     }
   }
 }
+

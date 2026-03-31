@@ -53,3 +53,4 @@ export function collapseTeammateShutdowns(
 
   return result
 }
+

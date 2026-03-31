@@ -5510,3 +5510,4 @@ export function wrapCommandText(
       return `The user sent a new message while you were working:\n${raw}\n\nIMPORTANT: After completing your current task, you MUST address the user's message above. Do not ignore it.`
   }
 }
+

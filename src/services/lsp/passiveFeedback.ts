@@ -326,3 +326,4 @@ export function registerLSPNotificationHandlers(
     diagnosticFailures,
   }
 }
+

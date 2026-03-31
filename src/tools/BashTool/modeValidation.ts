@@ -113,3 +113,4 @@ export function getAutoAllowedCommands(
 ): readonly string[] {
   return mode === 'acceptEdits' ? ACCEPT_EDITS_ALLOWED_COMMANDS : []
 }
+

@@ -27,3 +27,4 @@ export function semanticBoolean<T extends z.ZodType>(
     inner,
   )
 }
+

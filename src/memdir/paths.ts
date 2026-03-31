@@ -276,3 +276,4 @@ export function isAutoMemPath(absolutePath: string): boolean {
   const normalizedPath = normalize(absolutePath)
   return normalizedPath.startsWith(getAutoMemPath())
 }
+

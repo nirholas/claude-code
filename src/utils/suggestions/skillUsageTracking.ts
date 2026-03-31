@@ -53,3 +53,4 @@ export function getSkillUsageScore(skillName: string): number {
   // Minimum recency factor of 0.1 to avoid completely dropping old but heavily used skills
   return usage.usageCount * Math.max(recencyFactor, 0.1)
 }
+

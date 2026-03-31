@@ -338,3 +338,4 @@ async function setMeterState(): Promise<void> {
     getSessionCounter()?.add(1)
   }
 }
+

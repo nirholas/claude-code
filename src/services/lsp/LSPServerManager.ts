@@ -418,3 +418,4 @@ export function createLSPServerManager(): LSPServerManager {
     isFileOpen,
   }
 }
+

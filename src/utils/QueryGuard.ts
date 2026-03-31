@@ -119,3 +119,4 @@ export class QueryGuard {
     this._changed.emit()
   }
 }
+

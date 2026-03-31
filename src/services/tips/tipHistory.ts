@@ -15,3 +15,4 @@ export function getSessionsSinceLastShown(tipId: string): number {
   if (!lastShown) return Infinity
   return config.numStartups - lastShown
 }
+

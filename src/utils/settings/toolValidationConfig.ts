@@ -101,3 +101,4 @@ export function isBashPrefixTool(toolName: string): boolean {
 export function getCustomValidation(toolName: string) {
   return TOOL_VALIDATION_CONFIG.customValidation[toolName]
 }
+

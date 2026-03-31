@@ -385,3 +385,4 @@ export async function extractLspServersFromPlugins(
 
   return allServers
 }
+

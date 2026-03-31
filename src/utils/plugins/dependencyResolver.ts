@@ -303,3 +303,4 @@ export function formatReverseDependentsSuffix(
   if (!rdeps || rdeps.length === 0) return ''
   return ` — warning: required by ${rdeps.join(', ')}`
 }
+

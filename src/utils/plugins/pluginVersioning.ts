@@ -155,3 +155,4 @@ export function getVersionFromPath(installPath: string): string | null {
 export function isVersionedPath(path: string): boolean {
   return getVersionFromPath(path) !== null
 }
+
