@@ -387,3 +387,4 @@ export function getMergedTools(
   const builtInTools = getTools(permissionContext)
   return [...builtInTools, ...mcpTools]
 }
+
