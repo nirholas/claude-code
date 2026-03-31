@@ -162,3 +162,4 @@ export async function syncMarketplacesToZipCache(): Promise<void> {
   }
   await writeZipCacheKnownMarketplaces(mergedKnownMarketplaces)
 }
+
