@@ -27,3 +27,4 @@
 | [Beta Headers & Models](./19-betas-models.md) | API betas, model IDs, knowledge cutoffs |
 | [Security Audit](./20-security-audit.md) | Strengths, concerns, exposed credentials |
 | [Internals & Easter Eggs](./21-internals-easter-eggs.md) | Codenames, hidden features, curiosities |
+| [Codebase Stats](./22-codebase-stats.md) | File counts, line counts, largest files, dependencies, components, hooks |
