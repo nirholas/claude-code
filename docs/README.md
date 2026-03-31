@@ -28,3 +28,4 @@
 | [Security Audit](./20-security-audit.md) | Strengths, concerns, exposed credentials |
 | [Internals & Easter Eggs](./21-internals-easter-eggs.md) | Codenames, hidden features, curiosities |
 | [Codebase Stats](./22-codebase-stats.md) | File counts, line counts, largest files, dependencies, components, hooks |
+| [Plan Mode Flowchart](./23-plan-mode-flowchart.md) | Visual flowchart of Plan Mode's 5-phase workflow |
