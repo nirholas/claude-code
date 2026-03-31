@@ -74,3 +74,4 @@ export function isChannelAllowlisted(
     e => e.plugin === name && e.marketplace === marketplace,
   )
 }
+
