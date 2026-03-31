@@ -22,8 +22,7 @@ main().catch((err) => {
   console.error("Fatal error:", err);
   process.exit(1);
 });
-  try {
-    return (await fs.stat(p)).isDirectory();
+
   } catch {
     return false;
   }

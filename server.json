@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.nirholas/claude-code-explorer-mcp",
+  "description": "MCP server for exploring the Claude Code CLI source code — tools, commands, and architecture.",
+  "repository": {
+    "url": "https://github.com/nirholas/claude-code",
+    "source": "github"
+  },
+  "version": "1.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "claude-code-explorer-mcp",
+      "version": "1.1.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
