@@ -22,3 +22,4 @@ export const call: LocalCommandCall = async () => {
   }
   return { type: 'text', value: formatTotalCost() }
 }
+
