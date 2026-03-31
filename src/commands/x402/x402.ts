@@ -174,7 +174,7 @@ function handleRemove(): string {
   return 'Wallet removed and x402 payments disabled.\nPrivate key has been deleted from config.'
 }
 
-export const call: LocalCommandCall = async (_onDone, _context, args) => {
+export const call: LocalCommandCall = async (args) => {
   const subcommand = (args ?? '').trim().split(/\s+/)[0]?.toLowerCase()
 
   let value: string

@@ -32,6 +32,9 @@ coverage/
 # Bun
 bun.lockb
 
+# MCP registry tokens
+.mcpregistry_*
+
 # Temporary files
 tmp/
 temp/
