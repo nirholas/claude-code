@@ -125,3 +125,4 @@ export async function detectAndUninstallDelistedPlugins(): Promise<string[]> {
 
   return newlyFlagged
 }
+
