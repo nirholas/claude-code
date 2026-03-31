@@ -81,3 +81,4 @@ export const EXPLORE_AGENT: BuiltInAgentDefinition = {
   omitClaudeMd: true,
   getSystemPrompt: () => getExploreSystemPrompt(),
 }
+
