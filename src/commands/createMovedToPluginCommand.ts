@@ -63,3 +63,4 @@ Do not attempt to run the command. Simply inform the user about the plugin insta
     },
   }
 }
+
