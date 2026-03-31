@@ -323,7 +323,7 @@ External integrations and shared services.
 | **LSP** | `lsp/` | Language Server Protocol manager |
 | **Analytics** | `analytics/` | GrowthBook feature flags, telemetry |
 | **Plugins** | `plugins/` | Plugin loader and marketplace |
-| **Compact** | `compact/` | Conversation context compression |
+| **Compact** | `compact/` | Conversation context compression -- see [Context Management](context-management.md) |
 | **Policy Limits** | `policyLimits/` | Organization rate limits/quota |
 | **Remote Settings** | `remoteManagedSettings/` | Enterprise managed settings sync |
 | **Token Estimation** | `tokenEstimation.ts` | Token count estimation |
@@ -341,6 +341,7 @@ External integrations and shared services.
 ## See Also
 
 - [Architecture](architecture.md) — How subsystems connect in the core pipeline
+- [Context Management](context-management.md) — Deep dive into autocompact, microcompact, snip, and token estimation
 - [Tools Reference](tools.md) — Tools related to each subsystem
 - [Commands Reference](commands.md) — Commands for managing subsystems
 - [Exploration Guide](exploration-guide.md) — Finding subsystem source code
