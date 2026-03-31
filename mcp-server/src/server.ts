@@ -80,6 +80,11 @@ async function walkFiles(root: string, rel = ""): Promise<string[]> {
   return results;
 }
 
+/** Escape special regex characters in a string for use in RegExp. */
+function escapeRegex(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /** Safely resolve a user-supplied relative path under SRC_ROOT (blocks path traversal). */
 function safePath(relPath: string): string | null {
   const resolved = path.resolve(SRC_ROOT, relPath);
@@ -373,6 +378,81 @@ export function createServer(): Server {
           "Get a high-level architecture overview of Claude Code.",
         inputSchema: { type: "object" as const, properties: {} },
       },
+      {
+        name: "find_usages",
+        description:
+          "Find all import statements, require calls, or references to a symbol/module across the Claude Code source. Useful for tracing how a tool, service, or type is used throughout the codebase.",
+        inputSchema: {
+          type: "object" as const,
+          properties: {
+            symbol: {
+              type: "string",
+              description:
+                "Symbol or module name to search for, e.g. 'BashTool', 'QueryEngine', 'PermissionMode'.",
+            },
+            searchType: {
+              type: "string",
+              enum: ["imports", "all"],
+              description:
+                "Whether to search only import statements ('imports') or all occurrences ('all'). Default: 'all'.",
+            },
+            filePattern: {
+              type: "string",
+              description: "File extension filter, e.g. '.ts'. Default: all files.",
+            },
+            maxResults: {
+              type: "number",
+              description: "Max matches to return (default: 50).",
+            },
+          },
+          required: ["symbol"],
+        },
+      },
+      {
+        name: "get_subsystem_source",
+        description:
+          "Read all source files from a subsystem directory (e.g. 'bridge/', 'coordinator/', 'services/mcp/') and return them concatenated with file headers. Useful for understanding a complete subsystem at once.",
+        inputSchema: {
+          type: "object" as const,
+          properties: {
+            subsystem: {
+              type: "string",
+              description:
+                "Relative path from src/, e.g. 'bridge', 'coordinator', 'services/mcp', 'hooks/toolPermission'.",
+            },
+            maxFiles: {
+              type: "number",
+              description: "Max files to include (default: 20).",
+            },
+            maxLinesPerFile: {
+              type: "number",
+              description: "Max lines per file (default: 200). Use 0 for unlimited.",
+            },
+          },
+          required: ["subsystem"],
+        },
+      },
+      {
+        name: "get_related_files",
+        description:
+          "Given a source file path, find files that import it (dependents) or that it imports (dependencies). Helps trace data flow and understand coupling.",
+        inputSchema: {
+          type: "object" as const,
+          properties: {
+            path: {
+              type: "string",
+              description: "Relative path from src/, e.g. 'QueryEngine.ts' or 'tools/BashTool/BashTool.ts'.",
+            },
+            direction: {
+              type: "string",
+              enum: ["dependents", "dependencies", "both"],
+              description:
+                "'dependents' = files that import this file. 'dependencies' = files this file imports. 'both' = all. Default: 'both'.",
+            },
+          },
+          required: ["path"],
+        },
+      },
     ],
   }));
 
@@ -639,6 +719,218 @@ ${commands.map((c) => `- **${c.name}** ${c.isDirectory ? "(directory)" : "(file)
 - **server/** — Server/remote mode
 `;
           return { content: [{ type: "text" as const, text: overview }] };
+        }
+
+        case "find_usages": {
+          const symbol = (args as Record<string, unknown>)?.symbol as string;
+          if (!symbol) throw new Error("symbol is required");
+          const searchType =
+            ((args as Record<string, unknown>)?.searchType as string) ?? "all";
+          const filePattern = (args as Record<string, unknown>)
+            ?.filePattern as string | undefined;
+          const maxResults =
+            ((args as Record<string, unknown>)?.maxResults as number) ?? 50;
+
+          // Build pattern: for 'imports', match only import/require lines
+          let pattern: RegExp;
+          if (searchType === "imports") {
+            pattern = new RegExp(
+              `(import|require).*['"].*${escapeRegex(symbol)}.*['"]|from\\s+['"].*${escapeRegex(symbol)}.*['"]`,
+              "i"
+            );
+          } else {
+            pattern = new RegExp(escapeRegex(symbol), "i");
+          }
+
+          const allFiles = await walkFiles(SRC_ROOT);
+          const filtered = filePattern
+            ? allFiles.filter((f) => f.endsWith(filePattern))
+            : allFiles.filter(
+                (f) => f.endsWith(".ts") || f.endsWith(".tsx")
+              );
+
+          const matches: string[] = [];
+          for (const file of filtered) {
+            if (matches.length >= maxResults) break;
+            const abs = path.join(SRC_ROOT, file);
+            let content: string;
+            try {
+              content = await fs.readFile(abs, "utf-8");
+            } catch {
+              continue;
+            }
+            const lines = content.split("\n");
+            for (let i = 0; i < lines.length; i++) {
+              if (matches.length >= maxResults) break;
+              if (pattern.test(lines[i]!)) {
+                matches.push(`${file}:${i + 1}: ${lines[i]!.trim()}`);
+              }
+            }
+          }
+
+          return {
+            content: [
+              {
+                type: "text" as const,
+                text:
+                  matches.length > 0
+                    ? `Found ${matches.length} usage(s) of "${symbol}":\n\n${matches.join("\n")}`
+                    : `No usages of "${symbol}" found.`,
+              },
+            ],
+          };
+        }
+
+        case "get_subsystem_source": {
+          const subsystem = (args as Record<string, unknown>)
+            ?.subsystem as string;
+          if (!subsystem) throw new Error("subsystem is required");
+          const maxFiles =
+            ((args as Record<string, unknown>)?.maxFiles as number) ?? 20;
+          const maxLinesPerFile =
+            ((args as Record<string, unknown>)?.maxLinesPerFile as number) ??
+            200;
+
+          const abs = safePath(subsystem);
+          if (!abs || !(await dirExists(abs)))
+            throw new Error(`Subsystem directory not found: ${subsystem}`);
+
+          const allRelFiles = await walkFiles(abs);
+          const tsFiles = allRelFiles
+            .filter((f) => f.endsWith(".ts") || f.endsWith(".tsx"))
+            .slice(0, maxFiles);
+
+          if (tsFiles.length === 0) {
+            return {
+              content: [
+                {
+                  type: "text" as const,
+                  text: `No TypeScript files found in ${subsystem}/`,
+                },
+              ],
+            };
+          }
+
+          const parts: string[] = [
+            `# Subsystem: ${subsystem}/\n${tsFiles.length} file(s)${allRelFiles.length > maxFiles ? ` (truncated — ${allRelFiles.length - tsFiles.length} more)` : ""}\n`,
+          ];
+
+          for (const relFile of tsFiles) {
+            const filePath = path.join(abs, relFile);
+            let content: string;
+            try {
+              content = await fs.readFile(filePath, "utf-8");
+            } catch {
+              parts.push(`## ${relFile}\n(unreadable)\n`);
+              continue;
+            }
+            const lines = content.split("\n");
+            const truncated =
+              maxLinesPerFile > 0 && lines.length > maxLinesPerFile;
+            const displayed = truncated
+              ? lines.slice(0, maxLinesPerFile)
+              : lines;
+            parts.push(
+              `## ${subsystem}/${relFile} (${lines.length} lines${truncated ? `, showing first ${maxLinesPerFile}` : ""})\n\`\`\`typescript\n${displayed.join("\n")}\n\`\`\`\n`
+            );
+          }
+
+          return {
+            content: [
+              { type: "text" as const, text: parts.join("\n") },
+            ],
+          };
+        }
+
+        case "get_related_files": {
+          const relPath = (args as Record<string, unknown>)?.path as string;
+          if (!relPath) throw new Error("path is required");
+          const direction =
+            ((args as Record<string, unknown>)?.direction as string) ?? "both";
+
+          const abs = safePath(relPath);
+          if (!abs || !(await fileExists(abs)))
+            throw new Error(`File not found: ${relPath}`);
+
+          // Extract the module identifier (without extension, without leading src/)
+          const baseName = path.basename(relPath).replace(/\.(ts|tsx)$/, "");
+          const dirName = path.dirname(relPath);
+
+          const allFiles = await walkFiles(SRC_ROOT);
+          const tsFiles = allFiles.filter(
+            (f) => f.endsWith(".ts") || f.endsWith(".tsx")
+          );
+
+          const dependents: string[] = []; // files that import relPath
+          const dependencies: string[] = []; // files that relPath imports
+
+          // Find dependents: files that contain an import matching this file
+          if (direction === "dependents" || direction === "both") {
+            const importPatterns = [
+              new RegExp(`from\\s+['"].*/${escapeRegex(baseName)}['"]`),
+              new RegExp(`from\\s+['"].*/${escapeRegex(baseName)}\\.`),
+              new RegExp(`require\\(\\s*['"].*/${escapeRegex(baseName)}['"]`),
+            ];
+            for (const f of tsFiles) {
+              if (f === relPath) continue;
+              const content = await fs.readFile(path.join(SRC_ROOT, f), "utf-8").catch(() => "");
+              if (importPatterns.some((p) => p.test(content))) {
+                dependents.push(f);
+              }
+            }
+          }
+
+          // Find dependencies: what this file imports
+          if (direction === "dependencies" || direction === "both") {
+            const content = await fs.readFile(abs, "utf-8").catch(() => "");
+            const importRe = /from\s+['"]([^'"]+)['"]/g;
+            const requireRe = /require\(\s*['"]([^'"]+)['"]\s*\)/g;
+            const imported = new Set<string>();
+            let m;
+            while ((m = importRe.exec(content)) !== null) imported.add(m[1]!);
+            while ((m = requireRe.exec(content)) !== null) imported.add(m[1]!);
+            for (const imp of imported) {
+              if (!imp.startsWith(".")) {
+                dependencies.push(`[external] ${imp}`);
+                continue;
+              }
+              // Resolve relative path
+              const resolved = path.normalize(path.join(dirName, imp));
+              // Try to find the actual file
+              const candidates = [
+                resolved,
+                resolved + ".ts",
+                resolved + ".tsx",
+                resolved + "/index.ts",
+                resolved + "/index.tsx",
+              ];
+              const match = tsFiles.find((f) =>
+                candidates.some((c) => f === c || f.replace(/\.(ts|tsx)$/, "") === c)
+              );
+              dependencies.push(match ? match : `[unresolved] ${resolved}`);
+            }
+          }
+
+          let text = `# Related files for: ${relPath}\n\n`;
+          if (direction === "dependents" || direction === "both") {
+            text += `## Dependents (${dependents.length} files import this)\n`;
+            text +=
+              dependents.length > 0
+                ? dependents.map((f) => `  - ${f}`).join("\n")
+                : "  (none found)";
+            text += "\n\n";
+          }
+          if (direction === "dependencies" || direction === "both") {
+            text += `## Dependencies (${dependencies.length} imports in this file)\n`;
+            text +=
+              dependencies.length > 0
+                ? dependencies.map((f) => `  - ${f}`).join("\n")
+                : "  (none found)";
+          }
+
+          return {
+            content: [{ type: "text" as const, text }],
+          };
         }
 
         default:

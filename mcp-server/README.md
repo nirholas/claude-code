@@ -4,7 +4,7 @@ A standalone [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) se
 
 ## What It Does
 
-Exposes 8 tools, 3 resources, and 5 prompts for navigating the ~1,900-file, 512K+ line Claude Code codebase:
+Exposes 11 tools, 3 resources, and 5 prompts for navigating the ~1,900-file, 512K+ line Claude Code codebase:
 
 ### Transports
 
@@ -22,10 +22,13 @@ Exposes 8 tools, 3 resources, and 5 prompts for navigating the ~1,900-file, 512K
 | `list_commands` | List all 50+ slash commands (/commit, /review, etc.) |
 | `get_tool_source` | Read a specific tool's implementation |
 | `get_command_source` | Read a specific command's implementation |
-| `read_source_file` | Read any file from `src/` by relative path |
+| `read_source_file` | Read any file from `src/` by relative path (supports line ranges) |
 | `search_source` | Regex search across the entire source tree |
 | `list_directory` | List contents of any directory under `src/` |
 | `get_architecture` | Get a full architecture overview |
+| `find_usages` | Find all imports/references to a symbol across the codebase |
+| `get_subsystem_source` | Read all files in a subsystem directory at once (e.g. `bridge/`, `coordinator/`) |
+| `get_related_files` | Find files that import a given file, or files it imports (dependency graph) |
 
 ### Resources
 
@@ -222,6 +225,9 @@ Once connected, you can ask your AI assistant things like:
 - "What files are in the bridge directory?"
 - "Read the QueryEngine.ts file, lines 1-100"
 - "How does the MCP client connection work?"
+- "Find all usages of PermissionMode across the codebase"
+- "Show me everything in the coordinator/ subsystem"
+- "What files import QueryEngine.ts?"
 - Use the `explain_tool` prompt with "FileEditTool" to get a full breakdown
 - Use `how_does_it_work` with "bridge" to understand IDE integration
 
