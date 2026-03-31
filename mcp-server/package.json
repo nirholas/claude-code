@@ -16,7 +16,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "start:http": "node dist/http.js",
-    "dev": "npx tsx src/index.ts"
+    "dev": "npx tsx src/index.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
@@ -26,8 +27,7 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.2"
   }
 }
-
-
