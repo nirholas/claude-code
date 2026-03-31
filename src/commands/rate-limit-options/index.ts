@@ -17,3 +17,4 @@ const rateLimitOptions = {
 } satisfies Command
 
 export default rateLimitOptions
+

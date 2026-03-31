@@ -164,3 +164,4 @@ export async function shouldShowAppUpgradeMessage(): Promise<boolean> {
   return cfg.should_show_app_upgrade_message
 }
 
+
