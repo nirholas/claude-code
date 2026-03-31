@@ -54,3 +54,4 @@ case "$STEP" in
 esac
 
 echo "── Done ──"
+
