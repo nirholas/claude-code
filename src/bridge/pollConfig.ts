@@ -109,3 +109,4 @@ export function getPollIntervalConfig(): PollIntervalConfig {
   return parsed.success ? parsed.data : DEFAULT_POLL_CONFIG
 }
 
+
