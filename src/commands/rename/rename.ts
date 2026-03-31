@@ -85,3 +85,4 @@ export async function call(
   onDone(`Session renamed to: ${newName}`, { display: 'system' })
   return null
 }
+
