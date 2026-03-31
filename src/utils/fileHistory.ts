@@ -1113,3 +1113,4 @@ function maybeDumpStateForDebug(state: FileHistoryState): void {
     console.error(inspect(state, false, 5))
   }
 }
+
