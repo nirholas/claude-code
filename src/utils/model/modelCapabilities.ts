@@ -116,3 +116,4 @@ export async function refreshModelCapabilities(): Promise<void> {
     )
   }
 }
+
