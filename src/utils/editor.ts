@@ -181,3 +181,4 @@ export const getExternalEditor = memoize((): string | undefined => {
   const editors = ['code', 'vi', 'nano']
   return editors.find(command => isCommandAvailable(command))
 })
+
