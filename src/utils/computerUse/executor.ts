@@ -656,3 +656,4 @@ export async function unhideComputerUseApps(
   const cu = requireComputerUseSwift()
   await cu.apps.unhide([...bundleIds])
 }
+
