@@ -447,3 +447,4 @@ export async function reinitialize1PEventLoggingIfConfigChanged(): Promise<void>
 
   void oldProvider.shutdown().catch(() => {})
 }
+
