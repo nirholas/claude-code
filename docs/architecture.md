@@ -218,6 +218,7 @@ Claude Code uses a **single-threaded event loop** (Bun/Node.js model) with:
 
 ## See Also
 
+- [Context Management](context-management.md) — Autocompact, microcompact, snip, and token estimation
 - [Tools Reference](tools.md) — Complete catalog of all 40 agent tools
 - [Commands Reference](commands.md) — Complete catalog of all slash commands
 - [Subsystems Guide](subsystems.md) — Bridge, MCP, permissions, skills, plugins, and more
