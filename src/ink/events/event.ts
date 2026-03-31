@@ -9,3 +9,4 @@ export class Event {
     this._didStopImmediatePropagation = true
   }
 }
+
