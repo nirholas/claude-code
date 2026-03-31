@@ -25,3 +25,4 @@ export function matchesKeepGoingKeyword(input: string): boolean {
   const keepGoingPattern = /\b(keep going|go on)\b/
   return keepGoingPattern.test(lowerInput)
 }
+
