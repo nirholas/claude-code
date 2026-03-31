@@ -301,3 +301,4 @@ export function useHistorySearch(
     handleKeyDown,
   }
 }
+
