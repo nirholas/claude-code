@@ -140,3 +140,4 @@ export function interpretCommandResult(
   const semantic = COMMAND_SEMANTICS.get(baseCommand) ?? DEFAULT_SEMANTIC
   return semantic(exitCode, stdout, stderr)
 }
+
