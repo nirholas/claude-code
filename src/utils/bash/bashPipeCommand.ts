@@ -292,3 +292,4 @@ function joinContinuationLines(command: string): string {
     }
   })
 }
+
