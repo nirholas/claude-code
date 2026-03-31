@@ -80,3 +80,4 @@ export const which: (command: string) => Promise<string | null> = bunWhich
  */
 export const whichSync: (command: string) => string | null =
   bunWhich ?? whichNodeSync
+
