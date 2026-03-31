@@ -183,3 +183,4 @@ export const PERMISSION_HANDLERS: Record<
   'accept-session': handleAcceptSession,
   reject: handleReject,
 }
+
