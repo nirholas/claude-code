@@ -37,3 +37,4 @@ export async function logUnaryEvent(event: LogEvent): Promise<void> {
     }),
   })
 }
+
