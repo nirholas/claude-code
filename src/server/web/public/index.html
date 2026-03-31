@@ -4,22 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#1a1b26" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#f5f5f5"  media="(prefers-color-scheme: light)">
   <title>Claude Code</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-
-  <!-- xterm.js from CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/lib/addon-fit.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-web-links@0.11.0/lib/addon-web-links.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-search@0.15.0/lib/addon-search.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-unicode11@0.8.0/lib/addon-unicode11.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-webgl@0.18.0/lib/addon-webgl.min.js"></script>
-
+  <!-- terminal.css is emitted by esbuild: xterm.css + styles.css bundled together -->
   <link rel="stylesheet" href="terminal.css">
 </head>
 <body>
+
   <!-- Top bar -->
   <div id="top-bar">
     <div class="left">
@@ -31,24 +23,26 @@
       <button id="bar-btn">Reconnect</button>
     </div>
   </div>
+  <!-- Re-expand button shown when top bar is collapsed -->
   <button id="toggle-bar" title="Show top bar">&#9662;</button>
 
-  <!-- Terminal -->
+  <!-- Terminal mount point -->
   <div id="terminal-container"></div>
 
-  <!-- Loading overlay -->
+  <!-- Loading overlay (initial connect) -->
   <div id="loading-overlay">
     <div class="spinner"></div>
-    <div class="message">Connecting to Claude Code...</div>
+    <div class="overlay-msg">Connecting to Claude Code…</div>
   </div>
 
-  <!-- Reconnect overlay -->
+  <!-- Reconnect overlay (shown on disconnect) -->
   <div id="reconnect-overlay">
     <div class="spinner"></div>
-    <div class="message">Connection lost. Reconnecting...</div>
-    <div class="sub" id="reconnect-sub">Retrying in 1s...</div>
+    <div class="overlay-msg">Connection lost. Reconnecting…</div>
+    <div class="overlay-sub" id="reconnect-sub">Retrying in 1s…</div>
   </div>
 
-  <script src="terminal.js"></script>
+  <!-- terminal.js is the esbuild bundle of terminal.ts + all xterm addons -->
+  <script type="module" src="terminal.js"></script>
 </body>
 </html>

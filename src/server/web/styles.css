@@ -1,0 +1,243 @@
+/* ── CSS custom properties (theme tokens) ───────────────────────────────── */
+:root {
+  --term-bg: #1a1b26;
+  --term-fg: #c0caf5;
+  --term-cursor: #c0caf5;
+  --term-selection: rgba(130, 170, 255, 0.3);
+  --term-black: #15161e;
+  --term-red: #f7768e;
+  --term-green: #9ece6a;
+  --term-yellow: #e0af68;
+  --term-blue: #7aa2f7;
+  --term-magenta: #bb9af7;
+  --term-cyan: #7dcfff;
+  --term-white: #a9b1d6;
+  --term-bright-black: #414868;
+  --term-bright-white: #c0caf5;
+  --bar-bg: #16161e;
+  --bar-fg: #565f89;
+  --bar-accent: #7aa2f7;
+  --overlay-bg: rgba(26, 27, 38, 0.92);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --term-bg: #f5f5f5;
+    --term-fg: #343b58;
+    --term-cursor: #343b58;
+    --term-selection: rgba(52, 59, 88, 0.2);
+    --term-black: #0f0f14;
+    --term-red: #8c4351;
+    --term-green: #485e30;
+    --term-yellow: #8f5e15;
+    --term-blue: #34548a;
+    --term-magenta: #5a4a78;
+    --term-cyan: #0f4b6e;
+    --term-white: #343b58;
+    --term-bright-black: #9699a3;
+    --term-bright-white: #343b58;
+    --bar-bg: #e8e8e8;
+    --bar-fg: #6c7086;
+    --bar-accent: #34548a;
+    --overlay-bg: rgba(245, 245, 245, 0.92);
+  }
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--term-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ── Top bar ────────────────────────────────────────────────────────────── */
+#top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 12px;
+  background: var(--bar-bg);
+  color: var(--bar-fg);
+  font-size: 12px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#top-bar.collapsed {
+  display: none;
+}
+
+#top-bar .left,
+#top-bar .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Re-expand button — only visible when bar is collapsed */
+#toggle-bar {
+  display: none;
+  position: fixed;
+  top: 4px;
+  right: 4px;
+  z-index: 20;
+  width: 20px;
+  height: 20px;
+  background: var(--bar-bg);
+  border: 1px solid var(--bar-fg);
+  border-radius: 3px;
+  color: var(--bar-fg);
+  cursor: pointer;
+  font-size: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+#top-bar.collapsed ~ #toggle-bar {
+  display: flex;
+}
+
+/* ── Status dot ─────────────────────────────────────────────────────────── */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--term-green);
+  transition: background 0.3s;
+}
+
+.status-dot.disconnected {
+  background: var(--term-red);
+}
+
+.status-dot.connecting {
+  background: var(--term-yellow);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* ── Bar button ─────────────────────────────────────────────────────────── */
+#bar-btn {
+  background: none;
+  border: 1px solid var(--bar-fg);
+  color: var(--bar-fg);
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+#bar-btn:hover {
+  color: var(--bar-accent);
+  border-color: var(--bar-accent);
+}
+
+/* ── Terminal container ─────────────────────────────────────────────────── */
+#terminal-container {
+  width: 100%;
+  height: calc(100vh - 32px);
+  background: var(--term-bg);
+}
+
+#top-bar.collapsed ~ #terminal-container {
+  height: 100vh;
+}
+
+/* Give xterm a little breathing room */
+#terminal-container .xterm {
+  padding: 4px;
+}
+
+/* ── Overlays (loading + reconnect) ─────────────────────────────────────── */
+#loading-overlay,
+#reconnect-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  background: var(--overlay-bg);
+  z-index: 100;
+}
+
+#loading-overlay {
+  transition: opacity 0.3s ease;
+}
+
+#loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#reconnect-overlay {
+  display: none;
+}
+
+#reconnect-overlay.visible {
+  display: flex;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--term-bright-black);
+  border-top-color: var(--bar-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.overlay-msg {
+  color: var(--term-fg);
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.overlay-sub {
+  margin-top: 6px;
+  color: var(--bar-fg);
+  font-size: 12px;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────── */
+.xterm-viewport::-webkit-scrollbar        { width: 8px; }
+.xterm-viewport::-webkit-scrollbar-track  { background: transparent; }
+.xterm-viewport::-webkit-scrollbar-thumb  { background: var(--term-bright-black); border-radius: 4px; }
+.xterm-viewport::-webkit-scrollbar-thumb:hover { background: var(--bar-fg); }
+
+/* ── Mobile ─────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  #top-bar {
+    height: 28px;
+    font-size: 11px;
+    padding: 0 8px;
+  }
+
+  #terminal-container {
+    height: calc(100vh - 28px);
+  }
+
+  #top-bar.collapsed ~ #terminal-container {
+    height: 100vh;
+  }
+}
