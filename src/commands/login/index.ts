@@ -13,3 +13,4 @@ export default () =>
     load: () => import('./login.js'),
   }) satisfies Command
 
+
