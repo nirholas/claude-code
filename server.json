@@ -1,4 +1,4 @@
-{
+cl{
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.nirholas/claude-code-explorer-mcp",
   "title": "Claude Code Explorer MCP",
