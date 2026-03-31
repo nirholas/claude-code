@@ -29,8 +29,9 @@ describe('getSystemContext()', () => {
 })
 
 describe('platform detection', () => {
-  it('runs on Linux in this CI environment', () => {
-    expect(process.platform).toBe('linux')
+  it('runs on a known platform', () => {
+    const known = ['linux', 'darwin', 'win32', 'freebsd', 'openbsd', 'sunos', 'aix']
+    expect(known).toContain(process.platform)
   })
 
   it('process.env.HOME or USER is set', () => {

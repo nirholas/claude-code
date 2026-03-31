@@ -47,6 +47,9 @@ export default defineConfig({
       { find: /^src\//, replacement: resolve(__dirname, 'src') + '/' },
       // bun:bundle is a Bun bundler virtual module; redirect to the dev shim
       { find: 'bun:bundle', replacement: resolve(__dirname, 'src/shims/bun-bundle.ts') },
+      // color-diff-napi is a native addon unavailable in test environments;
+      // redirect to the pre-existing stub shim so smoke tests can load
+      { find: 'color-diff-napi', replacement: resolve(__dirname, 'src/shims/color-diff-napi.ts') },
     ],
   },
 })
