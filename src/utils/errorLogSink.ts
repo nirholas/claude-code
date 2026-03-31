@@ -233,3 +233,4 @@ export function initializeErrorLogSink(): void {
 
   logForDebugging('Error log sink initialized')
 }
+
