@@ -697,3 +697,4 @@ export async function getWorktreeCountFromFs(): Promise<number> {
     return 1
   }
 }
+
