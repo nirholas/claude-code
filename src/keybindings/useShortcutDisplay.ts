@@ -57,3 +57,4 @@ export function useShortcutDisplay(
 
   return isFallback ? fallback : resolved
 }
+
