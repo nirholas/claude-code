@@ -925,3 +925,4 @@ export function endHookSpan(
   activeSpans.delete(spanId)
   strongSpans.delete(spanId)
 }
+
