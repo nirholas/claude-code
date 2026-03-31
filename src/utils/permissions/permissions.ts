@@ -1484,3 +1484,4 @@ function getUpdatedInputOrFallback(
       : undefined) ?? fallback
   )
 }
+
