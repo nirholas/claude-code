@@ -91,3 +91,4 @@ export async function call(
   onDone(`Session color set to: ${colorArg}`, { display: 'system' })
   return null
 }
+
