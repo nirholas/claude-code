@@ -39,3 +39,4 @@ echo "Running per-file beautify commits in ${REPO_PATH} ..."
 "${GITPRETTY_HOME}"/emoji-file-commits.sh "${REPO_PATH}"
 
 echo "Done. Review with: git -C ${REPO_PATH} log --oneline -n 20"
+
