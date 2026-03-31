@@ -102,6 +102,8 @@ const buildOptions: esbuild.BuildOptions = {
     // Anthropic-internal packages (not published externally)
     '@anthropic-ai/sandbox-runtime',
     '@anthropic-ai/claude-agent-sdk',
+    // Anthropic-internal (@ant/) packages — gated behind USER_TYPE === 'ant'
+    '@ant/*',
   ],
 
   jsx: 'automatic',

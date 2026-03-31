@@ -15,7 +15,7 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false,
     "lib": ["ESNext"],
-    "types": ["bun-types", "node"],
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "bun:bundle": ["./src/types/bun-bundle.d.ts"]
